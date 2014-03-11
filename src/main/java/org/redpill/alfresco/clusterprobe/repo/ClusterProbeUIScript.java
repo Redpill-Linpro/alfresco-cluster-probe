@@ -1,4 +1,4 @@
-package com.redpill.alfresco.clusterprobe.repo;
+package org.redpill.alfresco.clusterprobe.repo;
 
 import java.util.HashMap;
 import java.util.Map;

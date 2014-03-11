@@ -1,14 +1,13 @@
-package com.redpill.alfresco.clusterprobe.repo;
+package org.redpill.alfresco.clusterprobe.repo;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import org.redpill.alfresco.clusterprobe.Settings;
 import org.springframework.extensions.webscripts.Cache;
 import org.springframework.extensions.webscripts.DeclarativeWebScript;
 import org.springframework.extensions.webscripts.Status;
 import org.springframework.extensions.webscripts.WebScriptRequest;
-
-import com.redpill.alfresco.clusterprobe.Settings;
 
 public class SettingsScript extends DeclarativeWebScript {
 

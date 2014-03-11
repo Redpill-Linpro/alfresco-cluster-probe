@@ -1,10 +1,12 @@
-package com.redpill.alfresco.clusterprobe.share;
+package org.redpill.alfresco.clusterprobe.share;
 
 import javax.servlet.http.HttpSession;
 
 import org.alfresco.error.StackTraceUtil;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+import org.redpill.alfresco.clusterprobe.AbstractProbe;
+import org.redpill.alfresco.clusterprobe.Settings;
 import org.springframework.extensions.config.ConfigService;
 import org.springframework.extensions.surf.RequestContext;
 import org.springframework.extensions.surf.ServletUtil;
@@ -12,9 +14,6 @@ import org.springframework.extensions.surf.support.ThreadLocalRequestContext;
 import org.springframework.extensions.webscripts.connector.Connector;
 import org.springframework.extensions.webscripts.connector.ConnectorService;
 import org.springframework.extensions.webscripts.connector.Response;
-
-import com.redpill.alfresco.clusterprobe.AbstractProbe;
-import com.redpill.alfresco.clusterprobe.Settings;
 
 public class ProbeScript extends AbstractProbe {
 
@@ -42,7 +41,7 @@ public class ProbeScript extends AbstractProbe {
 
       final Connector connector = connService.getConnector(ENDPOINT_ID, currentUserId, currentSession);
 
-      final String alfrescoURL = "/com/redpill/alfresco/clusterprobe/settings?server=" + server;
+      final String alfrescoURL = "/org/redpill/alfresco/clusterprobe/settings?server=" + server;
 
       final Response response = connector.call(alfrescoURL);
 

@@ -1,4 +1,4 @@
-package com.redpill.alfresco.clusterprobe.repo;
+package org.redpill.alfresco.clusterprobe.repo;
 
 import java.io.Serializable;
 
@@ -8,9 +8,8 @@ import org.alfresco.service.cmr.search.ResultSet;
 import org.alfresco.service.cmr.search.ResultSetRow;
 import org.alfresco.service.cmr.search.SearchParameters;
 import org.alfresco.service.cmr.search.SearchService;
-
-import com.redpill.alfresco.clusterprobe.ClusterProbeModel;
-import com.redpill.alfresco.clusterprobe.Settings;
+import org.redpill.alfresco.clusterprobe.ClusterProbeModel;
+import org.redpill.alfresco.clusterprobe.Settings;
 
 public class ClusterProbeUtils {
 

@@ -34,7 +34,7 @@
          }
          
          function saveSettings() {
-            var url = '${url.serviceContext}/com/redpill/alfresco/clusterprobe/settings.json';
+            var url = '${url.serviceContext}/org/redpill/alfresco/clusterprobe/settings.json';
             
             var callback = {
                success: success,
@@ -57,7 +57,7 @@
             YAHOO.util.Connect.asyncRequest ("POST", url, callback, dataStr);
          }
          
-         $.getJSON('${url.serviceContext}/com/redpill/alfresco/clusterprobe/settings.json', { "server": "${probeHost}" }, function(data) {
+         $.getJSON('${url.serviceContext}/org/redpill/alfresco/clusterprobe/settings.json', { "server": "${probeHost}" }, function(data) {
             $("input#http-response-text").val(data.text);
             $("input#http-response-code").val(data.code);
          });

@@ -1,4 +1,4 @@
-package com.redpill.alfresco.clusterprobe;
+package org.redpill.alfresco.clusterprobe;
 
 import java.io.IOException;
 

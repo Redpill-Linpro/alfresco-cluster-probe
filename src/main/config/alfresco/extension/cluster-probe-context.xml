@@ -10,21 +10,21 @@
     </property>
   </bean>
 
-  <bean id="webscript.com.redpill.alfresco.clusterprobe.settings.get" class="com.redpill.alfresco.clusterprobe.repo.SettingsScript" parent="webscript">
+  <bean id="webscript.org.redpill.alfresco.clusterprobe.settings.get" class="org.redpill.alfresco.clusterprobe.repo.SettingsScript" parent="webscript">
     <property name="clusterProbeUtils" ref="cp.clusterProbeUtils" />
   </bean>
 
-  <bean id="webscript.com.redpill.alfresco.clusterprobe.cluster-probe-ui.get" class="com.redpill.alfresco.clusterprobe.repo.ClusterProbeUIScript"
+  <bean id="webscript.org.redpill.alfresco.clusterprobe.cluster-probe-ui.get" class="org.redpill.alfresco.clusterprobe.repo.ClusterProbeUIScript"
     parent="webscript">
     <property name="globalProperties" ref="global-properties" />
   </bean>
 
-  <bean id="webscript.com.redpill.alfresco.clusterprobe.probe.get" class="com.redpill.alfresco.clusterprobe.repo.ProbeScript" parent="webscript">
+  <bean id="webscript.org.redpill.alfresco.clusterprobe.probe.get" class="org.redpill.alfresco.clusterprobe.repo.ProbeScript" parent="webscript">
     <property name="globalProperties" ref="global-properties" />
     <property name="clusterProbeUtils" ref="cp.clusterProbeUtils" />
   </bean>
 
-  <bean id="cp.clusterProbeUtils" class="com.redpill.alfresco.clusterprobe.repo.ClusterProbeUtils">
+  <bean id="cp.clusterProbeUtils" class="org.redpill.alfresco.clusterprobe.repo.ClusterProbeUtils">
     <property name="searchService" ref="SearchService" />
   </bean>
 

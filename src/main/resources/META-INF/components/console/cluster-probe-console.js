@@ -113,7 +113,7 @@ if (typeof RL == "undefined" || !RL) {
 
          // Load Scripts from Repository
          Alfresco.util.Ajax.request({
-            url : Alfresco.constants.PROXY_URI + "com/redpill/alfresco/clusterprobe/settings.json",
+            url : Alfresco.constants.PROXY_URI + "org/redpill/alfresco/clusterprobe/settings.json",
             method : Alfresco.util.Ajax.GET,
             dataObj : {
                "server" : server
@@ -140,7 +140,7 @@ if (typeof RL == "undefined" || !RL) {
          var self = this;
 
          Alfresco.util.Ajax.jsonRequest({
-            url : Alfresco.constants.PROXY_URI + "com/redpill/alfresco/clusterprobe/settings.json",
+            url : Alfresco.constants.PROXY_URI + "org/redpill/alfresco/clusterprobe/settings.json",
             method : Alfresco.util.Ajax.POST,
             dataObj : {
                "server" : self.options.server,

@@ -2,5 +2,6 @@
   <shortname>Admin Console Cluster Probe UI</shortname>
   <description>Administration Console - Cluster Probe UI</description>
   <url>/com/redpill/alfresco/clusterprobe/cluster-probe-ui</url>
+  <url>/org/redpill/alfresco/clusterprobe/cluster-probe-ui</url>
   <authentication>admin</authentication>
 </webscript>

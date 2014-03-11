@@ -1,9 +1,9 @@
-package com.redpill.alfresco.clusterprobe.repo;
+package org.redpill.alfresco.clusterprobe.repo;
 
 import java.util.Properties;
 
-import com.redpill.alfresco.clusterprobe.AbstractProbe;
-import com.redpill.alfresco.clusterprobe.Settings;
+import org.redpill.alfresco.clusterprobe.AbstractProbe;
+import org.redpill.alfresco.clusterprobe.Settings;
 
 public class ProbeScript extends AbstractProbe {
 
