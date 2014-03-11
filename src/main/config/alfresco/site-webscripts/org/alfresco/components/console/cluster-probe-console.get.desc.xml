@@ -1,0 +1,6 @@
+<webscript>
+  <shortname>Admin Console Cluster Probe Console</shortname>
+  <description>Administration Console - Cluster Probe Console</description>
+  <url>/components/console/cluster-probe-console</url>
+  <family>admin-console</family>
+</webscript>

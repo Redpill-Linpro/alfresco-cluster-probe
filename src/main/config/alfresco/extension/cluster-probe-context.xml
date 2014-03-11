@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+  <bean id="cp.dictionaryBootstrap" parent="dictionaryModelBootstrap" depends-on="dictionaryBootstrap">
+    <property name="models">
+      <list>
+        <value>alfresco/extension/clusterProbeModel.xml</value>
+      </list>
+    </property>
+  </bean>
+
+  <bean id="webscript.org.redpill.alfresco.clusterprobe.settings.get" class="org.redpill.alfresco.clusterprobe.repo.SettingsScript" parent="webscript">
+    <property name="clusterProbeUtils" ref="cp.clusterProbeUtils" />
+  </bean>
+
+  <bean id="webscript.org.redpill.alfresco.clusterprobe.cluster-probe-ui.get" class="org.redpill.alfresco.clusterprobe.repo.ClusterProbeUIScript"
+    parent="webscript">
+    <property name="globalProperties" ref="global-properties" />
+  </bean>
+
+  <bean id="webscript.org.redpill.alfresco.clusterprobe.probe.get" class="org.redpill.alfresco.clusterprobe.repo.ProbeScript" parent="webscript">
+    <property name="globalProperties" ref="global-properties" />
+    <property name="clusterProbeUtils" ref="cp.clusterProbeUtils" />
+  </bean>
+
+  <bean id="cp.clusterProbeUtils" class="org.redpill.alfresco.clusterprobe.repo.ClusterProbeUtils">
+    <property name="searchService" ref="SearchService" />
+  </bean>
+
+</beans>

@@ -1,0 +1,9 @@
+<webscript>
+  <shortname>Probe the system and return an answer</shortname>
+  <description></description>
+  <url>/com/redpill/alfresco/clusterprobe/probe</url>
+  <url>/org/redpill/alfresco/clusterprobe/probe</url>
+  <format default="text">argument</format>
+  <authentication>none</authentication>
+  <transaction>none</transaction>
+</webscript>
