@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<model name="cp:clusterprobe" xmlns="http://www.alfresco.org/model/dictionary/1.0">
+
+  <description>Cluster Probe Model</description>
+  <author>Repill Linpro AB</author>
+  <version>1.0.0</version>
+
+  <imports>
+    <!-- Import Alfresco System Definitions -->
+    <import uri="http://www.alfresco.org/model/system/1.0" prefix="sys" />
+    <!-- Import Alfresco Dictionary Definitions -->
+    <import uri="http://www.alfresco.org/model/dictionary/1.0" prefix="d" />
+    <!-- Import Alfresco Content Domain Model Definitions -->
+    <import uri="http://www.alfresco.org/model/content/1.0" prefix="cm" />
+    <!-- Import Alfresco Rendition Domain Model Definitions -->
+    <import uri="http://www.alfresco.org/model/rendition/1.0" prefix="rn" />
+  </imports>
+
+  <namespaces>
+    <namespace uri="http://www.redpill-linpro.com/cluster-probe/model/1.0" prefix="cp" />
+  </namespaces>
+
+  <aspects>
+    <aspect name="cp:probe-settings">
+      <properties>
+        <property name="cp:text">
+          <type>d:text</type>
+        </property>
+        <property name="cp:code">
+          <type>d:int</type>
+          <default>200</default>
+        </property>
+      </properties>
+    </aspect>
+  </aspects>
+
+</model>
