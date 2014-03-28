@@ -1,7 +1,27 @@
 function main() {
-   var server = json.get("server");
-   var text = json.get("text");
-   var code = json.get("code");
+   var content = jsonUtils.toObject(requestbody.content);
+   
+   var server = content['server'];
+   var text = content["text"];
+   var code = content["code"];
+
+   if (!server || server == null || server.length == 0) {
+      status.code = 500;
+      status.redirect = true;
+      return;
+   }
+
+   if (!text || text == null || text.length == 0) {
+      status.code = 500;
+      status.redirect = true;
+      return;
+   }
+
+   if (!code || code == null || code.length == 0) {
+      status.code = 500;
+      status.redirect = true;
+      return;
+   }
    
    var settings = getServerSettings(server);
 
