@@ -73,7 +73,7 @@ if (typeof RL == "undefined" || !RL) {
                scope : this,
                correctScope : true
             }, "keydown").enable();
-            
+
             new YAHOO.util.KeyListener(parent.widgets.codeField, {
                keys : YAHOO.util.KeyListener.KEY.ENTER
             }, {
@@ -130,13 +130,11 @@ if (typeof RL == "undefined" || !RL) {
       },
 
       /**
-       * Fired when the user clicks on the execute button. Reads the script from
-       * the input textarea and calls the execute webscript in the repository to
-       * run the script.
+       * Fired when the user clicks on the Save button.
        * 
-       * @method onExecuteClick
+       * @method onSaveClick
        */
-      onSaveClick : function ACJC_onSaveClick(e, p_obj) {
+      onSaveClick : function(e, p_obj) {
          var self = this;
 
          Alfresco.util.Ajax.jsonRequest({
@@ -149,11 +147,17 @@ if (typeof RL == "undefined" || !RL) {
             },
             successCallback : {
                fn : function(res) {
+                  Alfresco.util.PopupManager.displayMessage({
+                     text : self.msg("save.success")
+                  });
                },
                scope : this
             },
             failureCallback : {
                fn : function() {
+                  Alfresco.util.PopupManager.displayMessage({
+                     text : self.msg("save.failure")
+                  });
                },
                scope : this
             }
