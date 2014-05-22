@@ -1,28 +1,28 @@
 function main() {
    var content = jsonUtils.toObject(requestbody.content);
-   
+
    var server = content['server'];
    var text = content["text"];
    var code = content["code"];
 
-   if (!server || server == null || server.length == 0) {
+   if (!server || server == null || server.length == 0) {
       status.code = 500;
       status.redirect = true;
       return;
    }
 
-   if (!text || text == null || text.length == 0) {
+   if (!text || text == null || text.length == 0) {
       status.code = 500;
       status.redirect = true;
       return;
    }
 
-   if (!code || code == null || code.length == 0) {
+   if (!code || code == null || code.length == 0) {
       status.code = 500;
       status.redirect = true;
       return;
    }
-   
+
    var settings = getServerSettings(server);
 
    settings.properties["cp:text"] = text;
@@ -60,7 +60,7 @@ function getServerSettings(server) {
       var settings = customPreferences.createNode(server, "cm:content");
 
       settings.addAspect("cp:probe-settings");
-      
+
       settings.properties["cm:name"] = server;
 
       return settings;
