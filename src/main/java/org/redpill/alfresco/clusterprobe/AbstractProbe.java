@@ -2,9 +2,13 @@ package org.redpill.alfresco.clusterprobe;
 
 import java.io.IOException;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.extensions.webscripts.AbstractWebScript;
 import org.springframework.extensions.webscripts.WebScriptRequest;
 import org.springframework.extensions.webscripts.WebScriptResponse;
+import org.springframework.extensions.webscripts.servlet.WebScriptServletRequest;
 
 public abstract class AbstractProbe extends AbstractWebScript {
 
@@ -34,7 +38,27 @@ public abstract class AbstractProbe extends AbstractWebScript {
       res.getWriter().close();
     } catch (final Exception ex) {
       throw new RuntimeException(ex);
+    } finally {
+      invalidateSession(req);
     }
+  }
+
+  private void invalidateSession(WebScriptRequest req) {
+    if (!(req instanceof WebScriptServletRequest)) {
+      return;
+    }
+
+    WebScriptServletRequest request = (WebScriptServletRequest) req;
+
+    HttpServletRequest servletRequest = request.getHttpServletRequest();
+
+    HttpSession session = servletRequest.getSession(false);
+    
+    if (session == null) {
+      return;
+    }
+    
+    session.invalidate();
   }
 
   protected String getServer() {

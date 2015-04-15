@@ -4,18 +4,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import javax.annotation.Resource;
+
 import org.springframework.extensions.webscripts.Cache;
 import org.springframework.extensions.webscripts.DeclarativeWebScript;
 import org.springframework.extensions.webscripts.Status;
 import org.springframework.extensions.webscripts.WebScriptRequest;
+import org.springframework.stereotype.Component;
 
-public class ClusterProbeUIScript extends DeclarativeWebScript {
+@Component("webscript.org.redpill.alfresco.clusterprobe.cluster-probe-ui.get")
+public class ClusterProbeUIGet extends DeclarativeWebScript {
 
+  @Resource(name = "global-properties")
   private Properties _globalProperties;
-
-  public void setGlobalProperties(final Properties globalProperties) {
-    _globalProperties = globalProperties;
-  }
 
   @Override
   protected Map<String, Object> executeImpl(final WebScriptRequest req, final Status status, final Cache cache) {

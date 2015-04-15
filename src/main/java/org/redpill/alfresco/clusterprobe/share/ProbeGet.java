@@ -1,5 +1,6 @@
 package org.redpill.alfresco.clusterprobe.share;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.alfresco.error.StackTraceUtil;
@@ -14,17 +15,16 @@ import org.springframework.extensions.surf.support.ThreadLocalRequestContext;
 import org.springframework.extensions.webscripts.connector.Connector;
 import org.springframework.extensions.webscripts.connector.ConnectorService;
 import org.springframework.extensions.webscripts.connector.Response;
+import org.springframework.stereotype.Component;
 
-public class ProbeScript extends AbstractProbe {
-
-  private ConfigService _configService;
+@Component("webscript.org.redpill.alfresco.clusterprobe.probe.get")
+public class ProbeGet extends AbstractProbe {
 
   protected static final String ENDPOINT_ID = "alfresco";
   protected static final String ALFRESCO_PROXY = "/proxy/alfresco";
 
-  public void setConfigService(final ConfigService configService) {
-    _configService = configService;
-  }
+  @Resource(name = "web.config")
+  private ConfigService _configService;
 
   @Override
   protected Settings getProbeSettings() {

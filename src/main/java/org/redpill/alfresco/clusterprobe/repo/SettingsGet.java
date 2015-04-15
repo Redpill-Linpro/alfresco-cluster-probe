@@ -4,18 +4,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.redpill.alfresco.clusterprobe.Settings;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.extensions.webscripts.Cache;
 import org.springframework.extensions.webscripts.DeclarativeWebScript;
 import org.springframework.extensions.webscripts.Status;
 import org.springframework.extensions.webscripts.WebScriptRequest;
+import org.springframework.stereotype.Component;
 
-public class SettingsScript extends DeclarativeWebScript {
+@Component("webscript.org.redpill.alfresco.clusterprobe.settings.get")
+public class SettingsGet extends DeclarativeWebScript {
 
+  @Autowired
   private ClusterProbeUtils _clusterProbeUtils;
-
-  public void setClusterProbeUtils(final ClusterProbeUtils clusterProbeUtils) {
-    _clusterProbeUtils = clusterProbeUtils;
-  }
 
   @Override
   protected Map<String, Object> executeImpl(final WebScriptRequest req, final Status status, final Cache cache) {
