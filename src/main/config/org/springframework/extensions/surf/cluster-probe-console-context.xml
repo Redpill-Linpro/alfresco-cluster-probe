@@ -1,19 +1,10 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<!DOCTYPE beans PUBLIC '-//SPRING//DTD BEAN//EN' 'http://www.springframework.org/dtd/spring-beans.dtd'>
+<?xml version="1.0" encoding="UTF-8"?>
 
-<beans>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-  <!-- Add Admin Console messages -->
-  <bean id="rl.cluster-probe-console.resources" class="org.springframework.extensions.surf.util.ResourceBundleBootstrapComponent">
-    <property name="resourceBundles">
-      <list>
-        <value>alfresco.messages.cluster-probe-console</value>
-      </list>
-    </property>
-  </bean>
-
-  <bean id="webscript.org.redpill.alfresco.clusterprobe.probe.get" class="org.redpill.alfresco.clusterprobe.share.ProbeScript" parent="webscript">
-    <property name="configService" ref="web.config" />
-  </bean>
+  <context:annotation-config />
+  <context:component-scan base-package="org.redpill.alfresco.clusterprobe.share" />
 
 </beans>
