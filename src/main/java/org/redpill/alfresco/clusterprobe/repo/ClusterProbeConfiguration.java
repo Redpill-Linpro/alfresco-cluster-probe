@@ -20,6 +20,10 @@ public class ClusterProbeConfiguration {
   
   @Autowired
   private TenantService tenantService;
+  
+  public ClusterProbeConfiguration() {
+    super();
+  }
 
   @Bean(initMethod="bootstrap")
   @DependsOn("dictionaryBootstrap")
