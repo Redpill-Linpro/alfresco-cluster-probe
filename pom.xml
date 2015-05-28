@@ -717,4 +717,19 @@
     </snapshotRepository>
   </distributionManagement>
 
+  <repositories>
+    <repository>
+      <id>redpill-linpro</id>
+      <url>http://maven.redpill-linpro.com/nexus/content/groups/public</url>
+    </repository>
+    <repository>
+      <id>alfresco-snapshots</id>
+      <url>https://artifacts.alfresco.com/nexus/content/groups/public-snapshots</url>
+      <snapshots>
+        <enabled>true</enabled>
+        <updatePolicy>daily</updatePolicy>
+      </snapshots>
+    </repository>
+  </repositories>
+
 </project>
