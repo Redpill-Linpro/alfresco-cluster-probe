@@ -2,7 +2,7 @@ package org.redpill.alfresco.clusterprobe.share.ft;
 
 import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.RestAssured.preemptive;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
 
 import org.apache.log4j.Logger;
 import org.junit.After;
