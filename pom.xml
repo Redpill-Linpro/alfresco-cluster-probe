@@ -603,7 +603,7 @@
                   <configuration>
                     <configuration>
                       <properties>
-                        <cargo.jvmargs>${jacoco-ft.agent.arg} -Xmx3g -Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n -Xnoagent -Djava.compiler=NONE</cargo.jvmargs>
+                        <cargo.jvmargs>${jacoco-ft.agent.arg} -Xmx3g -XX:MaxPermSize=256M -Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n -Xnoagent -Djava.compiler=NONE</cargo.jvmargs>
                       </properties>
                     </configuration>
                   </configuration>
