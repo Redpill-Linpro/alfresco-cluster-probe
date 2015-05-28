@@ -548,6 +548,7 @@
                     <version>7.0.53</version>
                   </artifactInstaller>
                   <log>${project.build.directory}/cargo.log</log>
+                  <timeout>300000</timeout>
                   <systemProperties>
                     <dir.root>${alfresco.data.location}</dir.root>
                   </systemProperties>
