@@ -710,18 +710,18 @@
   <distributionManagement>
     <repository>
       <id>redpill-linpro-releases</id>
-      <url>http://maven.redpill-linpro.com/nexus/content/repositories/releases</url>
+      <url>https://maven.redpill-linpro.com/nexus/content/repositories/releases</url>
     </repository>
     <snapshotRepository>
       <id>redpill-linpro-snapshots</id>
-      <url>http://maven.redpill-linpro.com/nexus/content/repositories/snapshots</url>
+      <url>https://maven.redpill-linpro.com/nexus/content/repositories/snapshots</url>
     </snapshotRepository>
   </distributionManagement>
 
   <repositories>
     <repository>
       <id>redpill-linpro</id>
-      <url>http://maven.redpill-linpro.com/nexus/content/groups/public</url>
+      <url>https://maven.redpill-linpro.com/nexus/content/groups/public</url>
     </repository>
     <repository>
       <id>alfresco-snapshots</id>
