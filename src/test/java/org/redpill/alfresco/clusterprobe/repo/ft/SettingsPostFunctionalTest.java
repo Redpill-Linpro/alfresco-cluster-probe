@@ -55,5 +55,20 @@ public class SettingsPostFunctionalTest extends AbstractRepoFunctionalTest {
           .body("code", equalTo(432))
         .when().get("/org/redpill/alfresco/clusterprobe/settings?server={server}");
   }
+
+  @Test
+  public void testSettingsPostNoServer() throws JSONException {
+    RestAssured.requestContentType(ContentType.JSON);
+    RestAssured.responseContentType(ContentType.JSON);
+    
+    JSONObject json = new JSONObject();
+    json.put("server", "");
+    
+    given()
+        .baseUri(getBaseUri())
+        .request().body(json.toString())
+        .expect().statusCode(400)
+        .when().post("/org/redpill/alfresco/clusterprobe/settings");
+  }
   
 }

@@ -158,5 +158,20 @@ public class ClusterProbeUtils {
 
     });
   }
+
+  /*
+   * For unit test purposes
+   */
+  public void setSearchService(SearchService searchService) {
+    _searchService = searchService;
+  }
+  
+  public void setRepository(Repository repository) {
+    _repository = repository;
+  }
+  
+  public void setNodeService(NodeService nodeService) {
+    _nodeService = nodeService;
+  }
   
 }
