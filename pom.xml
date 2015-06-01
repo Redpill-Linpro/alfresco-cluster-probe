@@ -4,7 +4,7 @@
   <parent>
     <groupId>com.redpill-linpro.alfresco</groupId>
     <artifactId>alfresco-base</artifactId>
-    <version>1.1.1.10</version>
+    <version>1.1.1.11</version>
   </parent>
 
   <groupId>org.redpill-linpro.alfresco</groupId>
