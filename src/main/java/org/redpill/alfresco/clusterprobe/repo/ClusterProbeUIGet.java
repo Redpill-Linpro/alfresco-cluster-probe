@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import javax.annotation.Resource;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.extensions.webscripts.Cache;
 import org.springframework.extensions.webscripts.DeclarativeWebScript;
 import org.springframework.extensions.webscripts.Status;
@@ -15,7 +15,8 @@ import org.springframework.stereotype.Component;
 @Component("webscript.org.redpill.alfresco.clusterprobe.cluster-probe-ui.get")
 public class ClusterProbeUIGet extends DeclarativeWebScript {
 
-  @Resource(name = "global-properties")
+  @Autowired
+  @Qualifier("global-properties")
   private Properties _globalProperties;
 
   @Override

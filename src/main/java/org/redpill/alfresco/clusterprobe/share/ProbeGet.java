@@ -1,6 +1,5 @@
 package org.redpill.alfresco.clusterprobe.share;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.alfresco.error.StackTraceUtil;
@@ -8,6 +7,8 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 import org.redpill.alfresco.clusterprobe.AbstractProbe;
 import org.redpill.alfresco.clusterprobe.Settings;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.extensions.config.ConfigService;
 import org.springframework.extensions.surf.RequestContext;
 import org.springframework.extensions.surf.ServletUtil;
@@ -23,7 +24,8 @@ public class ProbeGet extends AbstractProbe {
   protected static final String ENDPOINT_ID = "alfresco";
   protected static final String ALFRESCO_PROXY = "/proxy/alfresco";
 
-  @Resource(name = "web.config")
+  @Autowired
+  @Qualifier("web.config")
   private ConfigService _configService;
 
   @Override

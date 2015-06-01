@@ -2,17 +2,17 @@ package org.redpill.alfresco.clusterprobe.repo;
 
 import java.util.Properties;
 
-import javax.annotation.Resource;
-
 import org.redpill.alfresco.clusterprobe.AbstractProbe;
 import org.redpill.alfresco.clusterprobe.Settings;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component("webscript.org.redpill.alfresco.clusterprobe.probe.get")
 public class ProbeGet extends AbstractProbe {
 
-  @Resource(name = "global-properties")
+  @Autowired
+  @Qualifier("global-properties")
   private Properties _globalProperties;
 
   @Autowired

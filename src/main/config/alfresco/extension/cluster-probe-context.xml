@@ -6,11 +6,17 @@
 
   <!-- ####################################################################################################### -->
   <!-- By some strange reason there are errors in Alfresco if the <context:annotation-config /> is being used. -->
-  <!-- In order to fix this a AutowiredAnnotationBeanPostProcessor is registered and annotation-config=false   -->
-  <!-- is configured. If this is done all works fine                                                           -->
+  <!-- In order to fix this a AutowiredAnnotationBeanPostProcessor is registered and annotation-config=false -->
+  <!-- is configured. If this is done all works fine -->
   <!-- ####################################################################################################### -->
-
+  
   <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
+  <bean class="org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor">
+    <property name="initAnnotationType" value="javax.annotation.PostConstruct" />
+    <property name="destroyAnnotationType" value="javax.annotation.PreDestroy" />
+  </bean>
+  <bean class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor" />
+  <bean class="org.springframework.context.annotation.ConfigurationClassPostProcessor" />
 
   <context:component-scan base-package="org.redpill.alfresco.clusterprobe.repo" annotation-config="false" />
 
