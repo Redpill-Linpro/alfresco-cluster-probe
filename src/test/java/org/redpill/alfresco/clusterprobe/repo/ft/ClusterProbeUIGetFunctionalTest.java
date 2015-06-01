@@ -1,7 +1,8 @@
 package org.redpill.alfresco.clusterprobe.repo.ft;
 
-import static com.jayway.restassured.RestAssured.*;
-import static org.hamcrest.Matchers.*;
+import static com.jayway.restassured.RestAssured.given;
+import static com.jayway.restassured.RestAssured.preemptive;
+import static org.hamcrest.Matchers.containsString;
 
 import org.junit.After;
 import org.junit.Before;
@@ -37,5 +38,5 @@ public class ClusterProbeUIGetFunctionalTest extends AbstractRepoFunctionalTest 
         .body(containsString("\"server\": \"alfresco.private\""))
         .when().get("/org/redpill/alfresco/clusterprobe/cluster-probe-ui");
   }
-
+  
 }
