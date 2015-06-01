@@ -9,7 +9,7 @@
 
   <groupId>org.redpill-linpro.alfresco</groupId>
   <artifactId>alfresco-cluster-probe</artifactId>
-  <version>1.1.1</version>
+  <version>1.1.2</version>
 
   <properties>
     <webapp.name>alfresco</webapp.name>
@@ -260,11 +260,11 @@
   <distributionManagement>
     <repository>
       <id>redpill-linpro-releases</id>
-      <url>http://maven.redpill-linpro.com/nexus/content/repositories/releases</url>
+      <url>https://maven.redpill-linpro.com/nexus/content/repositories/releases</url>
     </repository>
     <snapshotRepository>
       <id>redpill-linpro-snapshots</id>
-      <url>http://maven.redpill-linpro.com/nexus/content/repositories/snapshots</url>
+      <url>https://maven.redpill-linpro.com/nexus/content/repositories/snapshots</url>
     </snapshotRepository>
   </distributionManagement>
 
