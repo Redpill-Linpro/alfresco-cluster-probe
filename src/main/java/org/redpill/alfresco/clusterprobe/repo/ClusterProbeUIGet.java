@@ -33,5 +33,12 @@ public class ClusterProbeUIGet extends DeclarativeWebScript {
 
     return model;
   }
+  
+  /*
+   * For unit test purposes
+   */
+  public void setGlobalProperties(Properties globalProperties) {
+    _globalProperties = globalProperties;
+  }
 
 }

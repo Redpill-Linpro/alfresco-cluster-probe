@@ -4,18 +4,19 @@
   <parent>
     <groupId>com.redpill-linpro.alfresco</groupId>
     <artifactId>alfresco-base</artifactId>
-    <version>1.1.1.11</version>
+    <version>1.1.1.14</version>
   </parent>
 
   <groupId>org.redpill-linpro.alfresco</groupId>
   <artifactId>alfresco-cluster-probe</artifactId>
-  <version>1.1.5</version>
+  <version>1.1.6</version>
 
   <properties>
     <webapp.name>alfresco</webapp.name>
     <alfresco.client.war>alfresco</alfresco.client.war>
     <alfresco.groupId>org.alfresco</alfresco.groupId>
-    <alfresco.version>4.2.4</alfresco.version>
+    <alfresco.version>4.2.f</alfresco.version>
+    <ft.skip>false</ft.skip>
   </properties>
 
   <developers>
@@ -41,32 +42,19 @@
     </dependency>
 
     <dependency>
-      <groupId>org.alfresco</groupId>
+      <groupId>${alfresco.groupId}</groupId>
       <artifactId>alfresco-data-model</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.alfresco</groupId>
+      <groupId>${alfresco.groupId}</groupId>
       <artifactId>alfresco-repository</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.codehaus.groovy</groupId>
-          <artifactId>groovy-all</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
 
     <dependency>
-      <groupId>org.alfresco</groupId>
+      <groupId>${alfresco.groupId}</groupId>
       <artifactId>alfresco-repository</artifactId>
-      <version>${alfresco.version}</version>
       <classifier>config</classifier>
-      <exclusions>
-        <exclusion>
-          <groupId>org.codehaus.groovy</groupId>
-          <artifactId>groovy-all</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
 
     <dependency>
@@ -107,15 +95,6 @@
     </resources>
 
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
-        </configuration>
-      </plugin>
-
       <plugin>
         <groupId>net.alchim31.maven</groupId>
         <artifactId>yuicompressor-maven-plugin</artifactId>
