@@ -1,8 +1,8 @@
 <webscript>
-  <shortname>Probe current application and return an answer</shortname>
+  <shortname>Probe Repo and return an answer</shortname>
   <description></description>
-  <url>/com/redpill/alfresco/clusterprobe/probe</url>
-  <url>/org/redpill/alfresco/clusterprobe/probe</url>
+  <url>/com/redpill/alfresco/clusterprobe/proberepo</url>
+  <url>/org/redpill/alfresco/clusterprobe/proberepo</url>
   <family>Redpill Linpro - Cluster Probe</family>
   <format default="text">argument</format>
   <authentication>none</authentication>

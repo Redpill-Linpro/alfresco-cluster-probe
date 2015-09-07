@@ -1,3 +1,7 @@
 ${tomcat.home}
 alf_data
 alf_data_dev
+/target/
+.settings
+.project
+.classpath
