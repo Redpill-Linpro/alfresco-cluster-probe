@@ -3,10 +3,11 @@ package org.redpill.alfresco.clusterprobe.share;
 import javax.servlet.http.HttpSession;
 
 import org.alfresco.error.StackTraceUtil;
-import org.json.JSONObject;
-import org.json.JSONTokener;
+import org.apache.log4j.Logger;
 import org.redpill.alfresco.clusterprobe.AbstractProbe;
 import org.redpill.alfresco.clusterprobe.Settings;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.extensions.config.ConfigService;
 import org.springframework.extensions.surf.RequestContext;
 import org.springframework.extensions.surf.ServletUtil;
@@ -14,22 +15,20 @@ import org.springframework.extensions.surf.support.ThreadLocalRequestContext;
 import org.springframework.extensions.webscripts.connector.Connector;
 import org.springframework.extensions.webscripts.connector.ConnectorService;
 import org.springframework.extensions.webscripts.connector.Response;
+import org.springframework.stereotype.Component;
 
-public class ProbeScript extends AbstractProbe {
-
-  private ConfigService _configService;
-
+@Component("webscript.org.redpill.alfresco.clusterprobe.proberepo.get")
+public class ProbeRepoGet extends AbstractProbe {
+  private static final Logger LOG = Logger.getLogger(ProbeRepoGet.class);
   protected static final String ENDPOINT_ID = "alfresco";
-  protected static final String ALFRESCO_PROXY = "/proxy/alfresco";
 
-  public void setConfigService(final ConfigService configService) {
-    _configService = configService;
-  }
+  @Autowired
+  @Qualifier("web.config")
+  private ConfigService _configService;
 
   @Override
   protected Settings getProbeSettings() {
     try {
-      final String server = getServer();
 
       final RequestContext requestContext = ThreadLocalRequestContext.getRequestContext();
 
@@ -41,16 +40,13 @@ public class ProbeScript extends AbstractProbe {
 
       final Connector connector = connService.getConnector(ENDPOINT_ID, currentUserId, currentSession);
 
-      final String alfrescoURL = "/org/redpill/alfresco/clusterprobe/settings?server=" + server;
+      final String alfrescoURL = "/org/redpill/alfresco/clusterprobe/probe";
 
       final Response response = connector.call(alfrescoURL);
 
-      final String jsonResponse = response.getResponse();
-
-      final JSONObject json = new JSONObject(new JSONTokener(jsonResponse));
-
-      return new Settings(json.getString("text"), json.getInt("code"));
+      return new Settings(response.getResponse(), response.getStatus().getCode());
     } catch (final Exception ex) {
+      LOG.error(ex.getMessage(), ex);
       final StringBuilder sb = new StringBuilder();
 
       StackTraceUtil.buildStackTrace(ex.getMessage(), ex.getStackTrace(), sb, 0);

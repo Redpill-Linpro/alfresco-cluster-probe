@@ -1,37 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-  <bean id="cp.dictionaryBootstrap" parent="dictionaryModelBootstrap" depends-on="dictionaryBootstrap">
-    <property name="models">
-      <list>
-        <value>alfresco/extension/clusterProbeModel.xml</value>
-      </list>
-    </property>
-  </bean>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-  <bean id="cp.resourceBundles" class="org.alfresco.i18n.ResourceBundleBootstrapComponent">
-    <property name="resourceBundles">
-      <list>
-        <value>alfresco.enterprise.messages.alfresco-cluster-probe</value>
-      </list>
-    </property>
+  <!-- ####################################################################################################### -->
+  <!-- By some strange reason there are errors in Alfresco if the <context:annotation-config /> is being used. -->
+  <!-- In order to fix this a AutowiredAnnotationBeanPostProcessor is registered and annotation-config=false -->
+  <!-- is configured. If this is done all works fine -->
+  <!-- ####################################################################################################### -->
+  
+  <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
+  <bean class="org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor">
+    <property name="initAnnotationType" value="javax.annotation.PostConstruct" />
+    <property name="destroyAnnotationType" value="javax.annotation.PreDestroy" />
   </bean>
+  <bean class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor" />
+  <bean class="org.springframework.context.annotation.ConfigurationClassPostProcessor" />
 
-  <bean id="webscript.org.redpill.alfresco.clusterprobe.settings.get" class="org.redpill.alfresco.clusterprobe.repo.SettingsScript" parent="webscript">
-    <property name="clusterProbeUtils" ref="cp.clusterProbeUtils" />
-  </bean>
-
-  <bean id="webscript.org.redpill.alfresco.clusterprobe.cluster-probe-ui.get" class="org.redpill.alfresco.clusterprobe.repo.ClusterProbeUIScript" parent="webscript">
-    <property name="globalProperties" ref="global-properties" />
-  </bean>
-
-  <bean id="webscript.org.redpill.alfresco.clusterprobe.probe.get" class="org.redpill.alfresco.clusterprobe.repo.ProbeScript" parent="webscript">
-    <property name="globalProperties" ref="global-properties" />
-    <property name="clusterProbeUtils" ref="cp.clusterProbeUtils" />
-  </bean>
-
-  <bean id="cp.clusterProbeUtils" class="org.redpill.alfresco.clusterprobe.repo.ClusterProbeUtils">
-    <property name="searchService" ref="SearchService" />
-  </bean>
+  <context:component-scan base-package="org.redpill.alfresco.clusterprobe.repo" annotation-config="false" />
 
 </beans>

@@ -3,5 +3,6 @@
   <description>Administration Console - Cluster Probe UI</description>
   <url>/com/redpill/alfresco/clusterprobe/cluster-probe-ui</url>
   <url>/org/redpill/alfresco/clusterprobe/cluster-probe-ui</url>
+  <family>Redpill Linpro - Cluster Probe</family>
   <authentication>admin</authentication>
 </webscript>

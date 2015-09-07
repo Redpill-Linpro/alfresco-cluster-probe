@@ -4,18 +4,20 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.extensions.webscripts.Cache;
 import org.springframework.extensions.webscripts.DeclarativeWebScript;
 import org.springframework.extensions.webscripts.Status;
 import org.springframework.extensions.webscripts.WebScriptRequest;
+import org.springframework.stereotype.Component;
 
-public class ClusterProbeUIScript extends DeclarativeWebScript {
+@Component("webscript.org.redpill.alfresco.clusterprobe.cluster-probe-ui.get")
+public class ClusterProbeUIGet extends DeclarativeWebScript {
 
+  @Autowired
+  @Qualifier("global-properties")
   private Properties _globalProperties;
-
-  public void setGlobalProperties(final Properties globalProperties) {
-    _globalProperties = globalProperties;
-  }
 
   @Override
   protected Map<String, Object> executeImpl(final WebScriptRequest req, final Status status, final Cache cache) {
@@ -30,6 +32,13 @@ public class ClusterProbeUIScript extends DeclarativeWebScript {
     model.put("probeHost", probeHost);
 
     return model;
+  }
+  
+  /*
+   * For unit test purposes
+   */
+  public void setGlobalProperties(Properties globalProperties) {
+    _globalProperties = globalProperties;
   }
 
 }
