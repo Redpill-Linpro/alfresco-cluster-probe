@@ -17,15 +17,17 @@ Building & Installation
 The build produces one jar file which can be included in your maven project using the following declaration in your pom.xml file.
 
 Repository dependency:
+
 ```xml
 <dependency>
   <groupId>org.redpill-linpro.alfresco</groupId>
   <artifactId>alfresco-cluster-probe</artifactId>
   <version>1.1.8</version>
 </dependency>
-`
+```
 
 Maven repository:
+
 ```xml
 <repository>
   <id>redpill-public</id>
