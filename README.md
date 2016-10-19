@@ -70,7 +70,7 @@ alfresco.probe.host=host.domain.tld
 For share nodes the following configuration should be made in ```share-config-custom.xml```
 
 ```
-<!-- Configuration for cluster-probe -->
+  <!-- The hostname of this cluster node-->
   <config>
     <probe-host>host.domain.tld</probe-host>
   </config>
@@ -84,6 +84,6 @@ This application is licensed under the LGPLv3 License. See the [LICENSE file](LI
 Authors
 -------
 
-
 Niklas Ekman - Redpill Linpro AB
+
 Marcus Svartmark - Redpill Linpro AB
