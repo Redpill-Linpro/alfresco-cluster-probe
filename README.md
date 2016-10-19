@@ -60,6 +60,22 @@ HTTP Status code: 200
 host.domain.tld-STATUS
 ```
 
+For repository nodes the following configuration should be made in ```alfresco-global.properties```
+
+```
+#The hostname of the current server to be used to differentiate different cluster nodes
+alfresco.probe.host=host.domain.tld
+```
+
+For share nodes the following configuration should be made in ```share-config-custom.xml```
+
+```
+<!-- Configuration for cluster-probe -->
+  <config>
+    <probe-host>host.domain.tld</probe-host>
+  </config>
+```
+
 License
 -------
 
