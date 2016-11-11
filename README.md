@@ -50,16 +50,31 @@ The following endpoints are available out of the box:
 
 Share:
 * http://localhost:8081/share/service/org/redpill/alfresco/clusterprobe/probe - Will return the probe status and text for share
-* http://localhost:8081/share/service/org/redpill/alfresco/clusterprobe/proberepo - Will return the probe status and text for the repository node that this share node is currently connected to
+* http://localhost:8081/share/service/org/redpill/alfresco/clusterprobe/probe/repo - Will return the probe status and text for the repository node that this share node is currently connected to
+* http://localhost:8081/share/service/org/redpill/alfresco/clusterprobe/probe/search - Will return the probe status of the search e
+ngine that the current repo node uses
 
 Repository:
 * http://localhost:8080/alfresco/service/org/redpill/alfresco/clusterprobe/probe - Will return the probe status of the targeted repository node
+* http://localhost:8080/alfresco/Service/org/redpill/alfresco/clusterprobe/probe/search - Will return the probe status of the search engine that the current repo node uses
 
-Example response:
+Example response for Share and Repository probes:
 
 ```
 HTTP Status code: 200
 host.domain.tld-STATUS
+```
+
+Example response for Search probes:
+
+```
+HTTP Status code: 200
+Search is working on server localhost
+```
+
+```
+HTTP Status code: 500
+Search not available. An occured error on server localhost: 10110089 
 ```
 
 For repository nodes the following configuration should be made in ```alfresco-global.properties```

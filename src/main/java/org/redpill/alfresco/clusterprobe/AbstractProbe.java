@@ -22,9 +22,6 @@ public abstract class AbstractProbe extends AbstractWebScript {
       final int code = settings.code;
       String text = settings.text;
 
-      if (code > 399) {
-        text = "";
-      }
 
       res.addHeader("Content-Length", String.valueOf(text.length()));
       res.addHeader("Cache-Control", "no-cache");
