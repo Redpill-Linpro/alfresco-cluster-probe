@@ -4,8 +4,6 @@ import javax.servlet.http.HttpSession;
 
 import org.alfresco.error.StackTraceUtil;
 import org.apache.log4j.Logger;
-import org.json.JSONObject;
-import org.json.JSONTokener;
 import org.redpill.alfresco.clusterprobe.AbstractProbe;
 import org.redpill.alfresco.clusterprobe.Settings;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +18,9 @@ import org.springframework.extensions.webscripts.connector.ConnectorService;
 import org.springframework.extensions.webscripts.connector.Response;
 import org.springframework.stereotype.Component;
 
-@Component("webscript.org.redpill.alfresco.clusterprobe.probe.get")
-public class ProbeGet extends AbstractProbe {
-  private static final Logger LOG = Logger.getLogger(ProbeGet.class);
+@Component("webscript.org.redpill.alfresco.clusterprobe.probesearch.get")
+public class ProbeSearch extends AbstractProbe {
+  private static final Logger LOG = Logger.getLogger(ProbeSearch.class);
   protected static final String ENDPOINT_ID = "alfresco";
 
   @Autowired
@@ -32,7 +30,6 @@ public class ProbeGet extends AbstractProbe {
   @Override
   protected Settings getProbeSettings(final WebScriptRequest req) {
     try {
-      final String server = getServer();
 
       final RequestContext requestContext = ThreadLocalRequestContext.getRequestContext();
 
@@ -44,15 +41,11 @@ public class ProbeGet extends AbstractProbe {
 
       final Connector connector = connService.getConnector(ENDPOINT_ID, currentUserId, currentSession);
 
-      final String alfrescoURL = "/org/redpill/alfresco/clusterprobe/settings?server=" + server;
+      final String alfrescoURL = "/org/redpill/alfresco/clusterprobe/probe/search";
 
       final Response response = connector.call(alfrescoURL);
 
-      final String jsonResponse = response.getResponse();
-
-      final JSONObject json = new JSONObject(new JSONTokener(jsonResponse));
-
-      return new Settings(json.getString("text"), json.getInt("code"));
+      return new Settings(response.getResponse(), response.getStatus().getCode());
     } catch (final Exception ex) {
       LOG.error(ex.getMessage(), ex);
       final StringBuilder sb = new StringBuilder();

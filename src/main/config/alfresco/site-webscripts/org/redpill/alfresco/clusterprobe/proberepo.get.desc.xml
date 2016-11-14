@@ -3,6 +3,8 @@
   <description></description>
   <url>/com/redpill/alfresco/clusterprobe/proberepo</url>
   <url>/org/redpill/alfresco/clusterprobe/proberepo</url>
+  <url>/com/redpill/alfresco/clusterprobe/probe/repo</url>
+  <url>/org/redpill/alfresco/clusterprobe/probe/repo</url>
   <family>Redpill Linpro - Cluster Probe</family>
   <format default="text">argument</format>
   <authentication>none</authentication>
