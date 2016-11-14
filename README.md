@@ -53,10 +53,14 @@ Share:
 * http://localhost:8081/share/service/org/redpill/alfresco/clusterprobe/probe/repo - Will return the probe status and text for the repository node that this share node is currently connected to
 * http://localhost:8081/share/service/org/redpill/alfresco/clusterprobe/probe/search - Will return the probe status of the search e
 ngine that the current repo node uses
+* http://localhost:8081/share/service/org/redpill/alfresco/clusterprobe/probe/transform/docx/pdf - Will return the probe status of transforms between docx and pdf on the repo node that this share node is currently connected to
+* http://localhost:8081/share/service/org/redpill/alfresco/clusterprobe/probe/transform/docx/png - Will return the probe status of transforms between docx and png on the repo node that this share node is currently connected to
 
 Repository:
 * http://localhost:8080/alfresco/service/org/redpill/alfresco/clusterprobe/probe - Will return the probe status of the targeted repository node
-* http://localhost:8080/alfresco/Service/org/redpill/alfresco/clusterprobe/probe/search - Will return the probe status of the search engine that the current repo node uses
+* http://localhost:8080/alfresco/service/org/redpill/alfresco/clusterprobe/probe/search - Will return the probe status of the search engine that the current repo node uses
+* http://localhost:8080/alfresco/service/org/redpill/alfresco/clusterprobe/probe/transform/docx/pdf - Will return the probe status of transforms between docx and pdf
+* http://localhost:8080/alfresco/service/org/redpill/alfresco/clusterprobe/probe/transform/docx/png - Will return the probe status of transforms between docx and png
 
 Example response for Share and Repository probes:
 
@@ -76,6 +80,20 @@ Search is working on server localhost
 HTTP Status code: 500
 Search not available. An occured error on server localhost: 10110089 
 ```
+
+Example response for transformation probes:
+
+```
+HTTP Status code: 200
+Transformation is working on server localhost
+```
+
+```
+HTTP Status code: 500
+Transformation not available. An occured error on server localhost: Test transformation from docx to pdf not supported
+```
+
+
 
 For repository nodes the following configuration should be made in ```alfresco-global.properties```
 

@@ -12,6 +12,7 @@ import org.springframework.extensions.config.ConfigService;
 import org.springframework.extensions.surf.RequestContext;
 import org.springframework.extensions.surf.ServletUtil;
 import org.springframework.extensions.surf.support.ThreadLocalRequestContext;
+import org.springframework.extensions.webscripts.WebScriptRequest;
 import org.springframework.extensions.webscripts.connector.Connector;
 import org.springframework.extensions.webscripts.connector.ConnectorService;
 import org.springframework.extensions.webscripts.connector.Response;
@@ -27,7 +28,7 @@ public class ProbeSearch extends AbstractProbe {
   private ConfigService _configService;
 
   @Override
-  protected Settings getProbeSettings() {
+  protected Settings getProbeSettings(final WebScriptRequest req) {
     try {
 
       final RequestContext requestContext = ThreadLocalRequestContext.getRequestContext();

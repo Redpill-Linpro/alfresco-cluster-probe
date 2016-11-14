@@ -1,0 +1,10 @@
+<webscript>
+  <shortname>Probe transform and return an answer</shortname>
+  <description></description>
+  <url>/com/redpill/alfresco/clusterprobe/probe/transform/{sourceExtension}/{targetExtension}</url>
+  <url>/org/redpill/alfresco/clusterprobe/probe/transform/{sourceExtension}/{targetExtension}</url>
+  <family>Redpill Linpro - Cluster Probe</family>
+  <format default="text">argument</format>
+  <authentication>none</authentication>
+  <transaction>none</transaction>
+</webscript>

@@ -6,6 +6,7 @@ import org.redpill.alfresco.clusterprobe.AbstractProbe;
 import org.redpill.alfresco.clusterprobe.Settings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.extensions.webscripts.WebScriptRequest;
 import org.springframework.stereotype.Component;
 
 @Component("webscript.org.redpill.alfresco.clusterprobe.probe.get")
@@ -19,7 +20,7 @@ public class ProbeGet extends AbstractProbe {
   private ClusterProbeUtils _clusterProbeUtils;
 
   @Override
-  protected Settings getProbeSettings() {
+  protected Settings getProbeSettings(final WebScriptRequest req) {
     final String server = getServer();
 
     final Settings settings = _clusterProbeUtils.getSettings(server);

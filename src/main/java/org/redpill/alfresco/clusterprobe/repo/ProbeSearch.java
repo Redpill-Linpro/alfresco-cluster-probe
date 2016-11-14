@@ -11,6 +11,7 @@ import org.redpill.alfresco.clusterprobe.AbstractProbe;
 import org.redpill.alfresco.clusterprobe.Settings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.extensions.webscripts.WebScriptRequest;
 import org.springframework.stereotype.Component;
 
 @Component("webscript.org.redpill.alfresco.clusterprobe.probesearch.get")
@@ -27,7 +28,7 @@ public class ProbeSearch extends AbstractProbe {
   private SearchService searchService;
 
   @Override
-  protected Settings getProbeSettings() {
+  protected Settings getProbeSettings(final WebScriptRequest req) {
     final String server = getServer();
 
     final Settings settings = new Settings("Search is working on server " + server, 200);

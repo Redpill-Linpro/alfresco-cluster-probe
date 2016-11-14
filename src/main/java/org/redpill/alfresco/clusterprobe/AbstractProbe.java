@@ -17,11 +17,10 @@ public abstract class AbstractProbe extends AbstractWebScript {
   @Override
   public void execute(final WebScriptRequest req, final WebScriptResponse res) throws IOException {
     try {
-      final Settings settings = getProbeSettings();
+      final Settings settings = getProbeSettings(req);
 
       final int code = settings.code;
       String text = settings.text;
-
 
       res.addHeader("Content-Length", String.valueOf(text.length()));
       res.addHeader("Cache-Control", "no-cache");
@@ -50,11 +49,11 @@ public abstract class AbstractProbe extends AbstractWebScript {
     HttpServletRequest servletRequest = request.getHttpServletRequest();
 
     HttpSession session = servletRequest.getSession(false);
-    
+
     if (session == null) {
       return;
     }
-    
+
     session.invalidate();
   }
 
@@ -70,6 +69,10 @@ public abstract class AbstractProbe extends AbstractWebScript {
 
   protected abstract String getConfiguredServer();
 
-  protected abstract Settings getProbeSettings();
+  protected Settings getProbeSettings() {
+    return getProbeSettings(null);
+  }
+
+  protected abstract Settings getProbeSettings(final WebScriptRequest req);
 
 }
