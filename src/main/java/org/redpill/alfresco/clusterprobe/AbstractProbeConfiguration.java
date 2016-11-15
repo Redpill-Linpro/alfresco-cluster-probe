@@ -8,7 +8,8 @@ public abstract class AbstractProbeConfiguration implements ProbeConfiguration {
 
   public static final String HOSTNAME_ENV_WINDOWS = "COMPUTERNAME";
   public static final String HOSTNAME_ENV_LINUX = "HOSTNAME";
-  public static final String HOSTNAME_ENV_CUSTOM = "ALFRESCO.PROBE.HOST";
+  public static final String HOSTNAME_ENV_CUSTOM_REPO = "ALFRESCO.PROBE.REPO.HOST";
+  public static final String HOSTNAME_ENV_CUSTOM_SHARE = "ALFRESCO.PROBE.SHARE.HOST";
   public static final String HOSTNAME_DEFAULT = "localhost";
 
   /**
@@ -35,10 +36,8 @@ public abstract class AbstractProbeConfiguration implements ProbeConfiguration {
    *
    * @return
    */
-  protected String getEnvCustomHostname() {
-    return System.getenv(HOSTNAME_ENV_CUSTOM);
-  }
-
+  protected abstract String getEnvCustomHostname();
+  
   @Override
   public String getProbeHost() {
     String hostname = getEnvCustomHostname();

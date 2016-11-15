@@ -94,6 +94,15 @@ Transformation not available. An occured error on server localhost: Test transfo
 ```
 
 
+Configuration
+-------------
+
+The probes needs a hostname to be configured to work. The hostname is read in the following order:
+
+* Configuration file (alfresco-global.properties or share-config-custom.xml)
+* Custom environment variable (ALFRESCO.PROBE.REPO.HOST or ALFRESCO.PROBE.SHARE.HOST)
+* Server hostname from environment variable (HOSTNAME on Linux, COMPUTERNAME on Windows)
+* Defaults to localhost if none of the above is read
 
 For repository nodes the following configuration should be made in ```alfresco-global.properties```
 

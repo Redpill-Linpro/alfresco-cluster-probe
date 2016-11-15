@@ -27,4 +27,9 @@ public class RepoProbeConfigurationImpl extends AbstractProbeConfiguration {
     return probeHost;
   }
 
+  @Override
+  protected String getEnvCustomHostname() {
+    return System.getenv(HOSTNAME_ENV_CUSTOM_REPO);
+  }
+
 }
