@@ -3,27 +3,41 @@ package org.redpill.alfresco.clusterprobe.repo;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Map;
-import java.util.Properties;
 
 import org.alfresco.util.GUID;
+import org.jmock.Expectations;
+import org.jmock.Mockery;
+import org.jmock.integration.junit4.JUnit4Mockery;
+import org.junit.Before;
 import org.junit.Test;
+import org.redpill.alfresco.clusterprobe.ProbeConfiguration;
 
 public class ClusterProbeUIGetTest {
 
+  Mockery mock;
+  ProbeConfiguration probeConfiguration;
+
+  @Before
+  public void setUp() {
+    mock = new JUnit4Mockery();
+    probeConfiguration = mock.mock(ProbeConfiguration.class);
+  }
+
   @Test
   public void testExecuteImplWebScriptRequestStatusCache() {
-    String alfrescoHost = GUID.generate();
-    String alfrescoProbeHost = GUID.generate();
+    final String alfrescoProbeHost = GUID.generate();
 
-    Properties globalProperties = new Properties();
-    globalProperties.put("alfresco.host", alfrescoHost);
-    globalProperties.put("alfresco.probe.host", alfrescoProbeHost);
+    mock.checking(new Expectations() {
+      {
+        oneOf(probeConfiguration).getProbeHost();
+        will(returnValue(alfrescoProbeHost));
+      }
+    });
 
     ClusterProbeUIGet script = new ClusterProbeUIGet();
-    script.setGlobalProperties(globalProperties);
-
+    script.setProbeConfiguration(probeConfiguration);
     Map<String, Object> model = script.executeImpl(null, null, null);
-    
+
     String probeHost = (String) model.get("probeHost");
 
     assertEquals(alfrescoProbeHost, probeHost);

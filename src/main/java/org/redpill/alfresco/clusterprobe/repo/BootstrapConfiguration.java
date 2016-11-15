@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 
 @Configuration
-public class ClusterProbeConfiguration {
+public class BootstrapConfiguration {
  
   @Autowired
   private DictionaryDAO dictionaryDAO;
@@ -21,7 +21,7 @@ public class ClusterProbeConfiguration {
   @Autowired
   private TenantService tenantService;
   
-  public ClusterProbeConfiguration() {
+  public BootstrapConfiguration() {
     super();
   }
 

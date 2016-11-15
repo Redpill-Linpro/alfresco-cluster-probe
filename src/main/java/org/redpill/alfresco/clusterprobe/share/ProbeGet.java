@@ -7,10 +7,10 @@ import org.apache.log4j.Logger;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 import org.redpill.alfresco.clusterprobe.AbstractProbe;
+import org.redpill.alfresco.clusterprobe.ProbeConfiguration;
 import org.redpill.alfresco.clusterprobe.Settings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.extensions.config.ConfigService;
 import org.springframework.extensions.surf.RequestContext;
 import org.springframework.extensions.surf.ServletUtil;
 import org.springframework.extensions.surf.support.ThreadLocalRequestContext;
@@ -22,12 +22,13 @@ import org.springframework.stereotype.Component;
 
 @Component("webscript.org.redpill.alfresco.clusterprobe.probe.get")
 public class ProbeGet extends AbstractProbe {
+
   private static final Logger LOG = Logger.getLogger(ProbeGet.class);
   protected static final String ENDPOINT_ID = "alfresco";
 
   @Autowired
-  @Qualifier("web.config")
-  private ConfigService _configService;
+  @Qualifier("cp.clusterProbeShareConfiguration")
+  private ProbeConfiguration probeConfiguration;
 
   @Override
   protected Settings getProbeSettings(final WebScriptRequest req) {
@@ -65,7 +66,7 @@ public class ProbeGet extends AbstractProbe {
 
   @Override
   protected String getConfiguredServer() {
-    return _configService.getGlobalConfig().getConfigElementValue("probe-host");
+    return probeConfiguration.getProbeHost();
   }
 
 }
