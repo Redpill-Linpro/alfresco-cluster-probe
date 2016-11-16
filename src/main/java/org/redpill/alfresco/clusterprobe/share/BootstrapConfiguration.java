@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.extensions.surf.util.ResourceBundleBootstrapComponent;
 
 @Configuration
-public class ClusterProbeConfiguration {
+public class BootstrapConfiguration {
   
   @Bean
   public ResourceBundleBootstrapComponent clusterProbeResourceBundles() {

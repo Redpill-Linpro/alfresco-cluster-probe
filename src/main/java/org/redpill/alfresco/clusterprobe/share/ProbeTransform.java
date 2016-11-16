@@ -7,10 +7,10 @@ import org.alfresco.error.StackTraceUtil;
 import org.alfresco.util.Pair;
 import org.apache.log4j.Logger;
 import org.redpill.alfresco.clusterprobe.AbstractProbe;
+import org.redpill.alfresco.clusterprobe.ProbeConfiguration;
 import org.redpill.alfresco.clusterprobe.Settings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.extensions.config.ConfigService;
 import org.springframework.extensions.surf.RequestContext;
 import org.springframework.extensions.surf.ServletUtil;
 import org.springframework.extensions.surf.support.ThreadLocalRequestContext;
@@ -20,6 +20,10 @@ import org.springframework.extensions.webscripts.connector.ConnectorService;
 import org.springframework.extensions.webscripts.connector.Response;
 import org.springframework.stereotype.Component;
 
+/**
+ *
+ * @author Marcus Svartmark - Redpill Linpro AB
+ */
 @Component("webscript.org.redpill.alfresco.clusterprobe.probetransform.get")
 public class ProbeTransform extends AbstractProbe {
 
@@ -27,8 +31,8 @@ public class ProbeTransform extends AbstractProbe {
   protected static final String ENDPOINT_ID = "alfresco";
 
   @Autowired
-  @Qualifier("web.config")
-  private ConfigService _configService;
+  @Qualifier("cp.clusterProbeShareConfiguration")
+  private ProbeConfiguration probeConfiguration;
 
   protected Pair<String, String> parseRequestedTransformation(final WebScriptRequest req) {
     Map<String, String> templateVars = req.getServiceMatch().getTemplateVars();
@@ -68,7 +72,7 @@ public class ProbeTransform extends AbstractProbe {
 
   @Override
   protected String getConfiguredServer() {
-    return _configService.getGlobalConfig().getConfigElementValue("probe-host");
+    return probeConfiguration.getProbeHost();
   }
 
 }
