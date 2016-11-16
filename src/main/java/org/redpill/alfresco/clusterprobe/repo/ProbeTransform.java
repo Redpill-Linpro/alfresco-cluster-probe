@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Map;
-import java.util.Properties;
 import org.alfresco.error.AlfrescoRuntimeException;
 import org.alfresco.repo.content.MimetypeMap;
 import org.alfresco.repo.content.filestore.FileContentReader;
@@ -19,17 +18,22 @@ import org.redpill.alfresco.clusterprobe.Settings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.alfresco.util.Pair;
+import org.redpill.alfresco.clusterprobe.ProbeConfiguration;
 import org.springframework.extensions.webscripts.WebScriptRequest;
 import org.springframework.stereotype.Component;
 
+/**
+ *
+ * @author Marcus Svartmark - Redpill Linpro AB
+ */
 @Component("webscript.org.redpill.alfresco.clusterprobe.probetransform.get")
 public class ProbeTransform extends AbstractProbe {
 
   private static final Logger LOG = Logger.getLogger(ProbeTransform.class);
 
   @Autowired
-  @Qualifier("global-properties")
-  protected Properties _globalProperties;
+  @Qualifier("cp.clusterProbeRepoConfiguration")
+  private ProbeConfiguration probeConfiguration;
 
   @Autowired
   @Qualifier("ContentService")
@@ -79,7 +83,7 @@ public class ProbeTransform extends AbstractProbe {
     }
     );
   }
-  
+
   protected void transformDocxToPng() {
 
     AuthenticationUtil.runAsSystem(new AuthenticationUtil.RunAsWork<Void>() {
@@ -128,14 +132,7 @@ public class ProbeTransform extends AbstractProbe {
 
   @Override
   protected String getConfiguredServer() {
-
-    // get the alfresco host, if that does not exist, take 'localhost'
-    final String alfrescoHost = _globalProperties.getProperty("alfresco.host", "localhost");
-
-    // get the probe host, if that does not exist, take the alfresco host
-    final String probeHost = _globalProperties.getProperty("alfresco.probe.host", alfrescoHost);
-
-    return probeHost;
+    return probeConfiguration.getProbeHost();
   }
 
 }

@@ -2,7 +2,7 @@ package org.redpill.alfresco.clusterprobe.repo;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
+import org.redpill.alfresco.clusterprobe.ProbeConfiguration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,29 +16,20 @@ import org.springframework.stereotype.Component;
 public class ClusterProbeUIGet extends DeclarativeWebScript {
 
   @Autowired
-  @Qualifier("global-properties")
-  private Properties _globalProperties;
+  @Qualifier("cp.clusterProbeRepoConfiguration")
+  private ProbeConfiguration probeConfiguration;
 
   @Override
   protected Map<String, Object> executeImpl(final WebScriptRequest req, final Status status, final Cache cache) {
-    final Map<String, Object> model = new HashMap<String, Object>();
-
-    // get the alfresco host, if that does not exist, take 'localhost'
-    final String alfrescoHost = _globalProperties.getProperty("alfresco.host", "localhost");
-
-    // get the probe host, if that does not exist, take the alfresco host
-    final String probeHost = _globalProperties.getProperty("alfresco.probe.host", alfrescoHost);
-
+    final Map<String, Object> model = new HashMap<>();
+    String probeHost = probeConfiguration.getProbeHost();
     model.put("probeHost", probeHost);
-
     return model;
   }
-  
-  /*
-   * For unit test purposes
-   */
-  public void setGlobalProperties(Properties globalProperties) {
-    _globalProperties = globalProperties;
+
+  //For unit tests
+  protected void setProbeConfiguration(ProbeConfiguration probeConfiguration) {
+    this.probeConfiguration = probeConfiguration;
   }
 
 }

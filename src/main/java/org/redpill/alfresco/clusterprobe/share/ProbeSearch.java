@@ -5,10 +5,10 @@ import javax.servlet.http.HttpSession;
 import org.alfresco.error.StackTraceUtil;
 import org.apache.log4j.Logger;
 import org.redpill.alfresco.clusterprobe.AbstractProbe;
+import org.redpill.alfresco.clusterprobe.ProbeConfiguration;
 import org.redpill.alfresco.clusterprobe.Settings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.extensions.config.ConfigService;
 import org.springframework.extensions.surf.RequestContext;
 import org.springframework.extensions.surf.ServletUtil;
 import org.springframework.extensions.surf.support.ThreadLocalRequestContext;
@@ -18,14 +18,19 @@ import org.springframework.extensions.webscripts.connector.ConnectorService;
 import org.springframework.extensions.webscripts.connector.Response;
 import org.springframework.stereotype.Component;
 
+/**
+ *
+ * @author Marcus Svartmark - Redpill Linpro AB
+ */
 @Component("webscript.org.redpill.alfresco.clusterprobe.probesearch.get")
 public class ProbeSearch extends AbstractProbe {
+
   private static final Logger LOG = Logger.getLogger(ProbeSearch.class);
   protected static final String ENDPOINT_ID = "alfresco";
 
   @Autowired
-  @Qualifier("web.config")
-  private ConfigService _configService;
+  @Qualifier("cp.clusterProbeShareConfiguration")
+  private ProbeConfiguration probeConfiguration;
 
   @Override
   protected Settings getProbeSettings(final WebScriptRequest req) {
@@ -58,7 +63,7 @@ public class ProbeSearch extends AbstractProbe {
 
   @Override
   protected String getConfiguredServer() {
-    return _configService.getGlobalConfig().getConfigElementValue("probe-host");
+    return probeConfiguration.getProbeHost();
   }
 
 }

@@ -1,8 +1,8 @@
 package org.redpill.alfresco.clusterprobe.repo;
 
-import java.util.Properties;
 
 import org.redpill.alfresco.clusterprobe.AbstractProbe;
+import org.redpill.alfresco.clusterprobe.ProbeConfiguration;
 import org.redpill.alfresco.clusterprobe.Settings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,30 +13,21 @@ import org.springframework.stereotype.Component;
 public class ProbeGet extends AbstractProbe {
 
   @Autowired
-  @Qualifier("global-properties")
-  private Properties _globalProperties;
+  @Qualifier("cp.clusterProbeRepoConfiguration")
+  private ProbeConfiguration probeConfiguration;
 
   @Autowired
-  private ClusterProbeUtils _clusterProbeUtils;
+  private ClusterProbeUtils clusterProbeUtils;
 
   @Override
   protected Settings getProbeSettings(final WebScriptRequest req) {
     final String server = getServer();
-
-    final Settings settings = _clusterProbeUtils.getSettings(server);
-
-    return settings;
+    return clusterProbeUtils.getSettings(server);
   }
 
   @Override
   protected String getConfiguredServer() {
-    // get the alfresco host, if that does not exist, take 'localhost'
-    final String alfrescoHost = _globalProperties.getProperty("alfresco.host", "localhost");
-
-    // get the probe host, if that does not exist, take the alfresco host
-    final String probeHost = _globalProperties.getProperty("alfresco.probe.host", alfrescoHost);
-
-    return probeHost;
+    return probeConfiguration.getProbeHost();
   }
 
 }

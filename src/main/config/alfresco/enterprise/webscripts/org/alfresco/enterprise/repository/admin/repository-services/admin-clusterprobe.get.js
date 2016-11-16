@@ -1,17 +1,10 @@
 <import resource="classpath:alfresco/enterprise/webscripts/org/alfresco/enterprise/repository/admin/admin-common.lib.js">
 
 function main() {
-   var hostname = Admin.getMBeanAttributes(
-      "Alfresco:Name=Cluster,Tool=Admin", ["HostName"]
-   )["HostName"].value;
-
-   var probeHost = Admin.getMBeanAttributes(
-      "Alfresco:Name=GlobalProperties", ["alfresco.probe.host"]
-   )["alfresco.probe.host"];
-
-   if (probeHost && probeHost != null) {
-      hostname = probeHost.value;
-   }
+  
+  var ctx = Packages.org.springframework.web.context.ContextLoader.getCurrentWebApplicationContext();
+  var probeConfig = ctx.getBean('cp.clusterProbeRepoConfiguration', Packages.org.redpill.alfresco.clusterprobe.ProbeConfiguration);
+  var hostname = probeConfig.getProbeHost();
 
    model.attributes = [];
    model.attributes["hostname"] = {
