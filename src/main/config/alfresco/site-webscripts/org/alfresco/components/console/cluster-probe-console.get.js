@@ -3,23 +3,14 @@
  */
 
 function getServer() {
-   var configElement = config.global['probe-host'];
-   
-   var server = "localhost";
-   
-   if (configElement != null) {
-      var server = configElement.value;
+  var ctx = Packages.org.springframework.web.context.ContextLoader.getCurrentWebApplicationContext();
+  var probeConfig = ctx.getBean('cp.clusterProbeShareConfiguration', Packages.org.redpill.alfresco.clusterprobe.ProbeConfiguration);
 
-      if (server == null) {
-         server = "localhost";
-      }
-   }
-
-   return server;
+  return probeConfig.getProbeHost();
 }
 
 function main() {
-   model.server = getServer();
+  model.server = getServer();
 }
 
 main();

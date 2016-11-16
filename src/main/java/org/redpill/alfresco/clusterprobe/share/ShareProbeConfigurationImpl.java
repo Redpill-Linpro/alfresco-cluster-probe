@@ -1,6 +1,5 @@
 package org.redpill.alfresco.clusterprobe.share;
 
-import java.util.Properties;
 import org.redpill.alfresco.clusterprobe.AbstractProbeConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,15 +19,14 @@ public class ShareProbeConfigurationImpl extends AbstractProbeConfiguration {
 
   @Override
   public String getProbeHost() {
-    String hostname = super.getProbeHost();
-
     String probeHost = configService.getGlobalConfig().getConfigElementValue("probe-host");
     if (probeHost == null) {
-      probeHost = hostname;
+      probeHost = super.getProbeHost();;
     }
+
     return probeHost;
   }
-  
+
   @Override
   protected String getEnvCustomHostname() {
     return System.getenv(HOSTNAME_ENV_CUSTOM_SHARE);

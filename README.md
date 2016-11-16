@@ -100,9 +100,11 @@ Configuration
 The probes needs a hostname to be configured to work. The hostname is read in the following order:
 
 * Configuration file (alfresco-global.properties or share-config-custom.xml)
-* Custom environment variable (ALFRESCO.PROBE.REPO.HOST or ALFRESCO.PROBE.SHARE.HOST)
-* Server hostname from environment variable (HOSTNAME on Linux, COMPUTERNAME on Windows)
+* Custom environment variable (ALFRESCO_PROBE_REPO_HOST or ALFRESCO_PROBE_SHARE_HOST)
+* Server hostname (looked up using java api). As a side effect if repository and share is run on the same machine, this will be identical for both repository and share probe.
 * Defaults to localhost if none of the above is read
+
+The recommended way of configuring the cluster probe is to use either configuration file or a custom environment variable. The lookup of server hostname might be expensive if the probe is used continously.
 
 For repository nodes the following configuration should be made in ```alfresco-global.properties```
 

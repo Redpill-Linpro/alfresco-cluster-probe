@@ -1,15 +1,18 @@
 package org.redpill.alfresco.clusterprobe;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
- * 
+ *
  * @author Marcus Svartmark - Redpill Linpro AB
  */
 public abstract class AbstractProbeConfiguration implements ProbeConfiguration {
 
-  public static final String HOSTNAME_ENV_WINDOWS = "COMPUTERNAME";
-  public static final String HOSTNAME_ENV_LINUX = "HOSTNAME";
-  public static final String HOSTNAME_ENV_CUSTOM_REPO = "ALFRESCO.PROBE.REPO.HOST";
-  public static final String HOSTNAME_ENV_CUSTOM_SHARE = "ALFRESCO.PROBE.SHARE.HOST";
+  public static final String HOSTNAME_ENV_CUSTOM_REPO = "ALFRESCO_PROBE_REPO_HOST";
+  public static final String HOSTNAME_ENV_CUSTOM_SHARE = "ALFRESCO_PROBE_SHARE_HOST";
   public static final String HOSTNAME_DEFAULT = "localhost";
 
   /**
@@ -17,18 +20,15 @@ public abstract class AbstractProbeConfiguration implements ProbeConfiguration {
    *
    * @return
    */
-  protected String getEnvHostname() {
-    //For Windows
-    String host = System.getenv(HOSTNAME_ENV_WINDOWS);
-    if (host != null) {
-      return host;
+  protected String getHostname() {
+    String hostName = null;
+    try {
+      hostName = InetAddress.getLocalHost().getHostName();
+    } catch (UnknownHostException ex) {
+      Logger.getLogger(AbstractProbeConfiguration.class.getName()).log(Level.SEVERE, null, ex);
     }
-    //For Linux
-    host = System.getenv(HOSTNAME_ENV_LINUX);
-    if (host != null) {
-      return host;
-    }
-    return null;
+
+    return hostName;
   }
 
   /**
@@ -37,12 +37,12 @@ public abstract class AbstractProbeConfiguration implements ProbeConfiguration {
    * @return
    */
   protected abstract String getEnvCustomHostname();
-  
+
   @Override
   public String getProbeHost() {
     String hostname = getEnvCustomHostname();
     if (hostname == null) {
-      hostname = getEnvHostname();
+      hostname = getHostname();
     }
     if (hostname == null) {
       hostname = HOSTNAME_DEFAULT;

@@ -19,11 +19,11 @@ public class RepoProbeConfigurationImpl extends AbstractProbeConfiguration {
 
   @Override
   public String getProbeHost() {
-    String hostname = super.getProbeHost();
-
     // get the probe host, if that does not exist, rely on environment variables
-    final String probeHost = globalProperties.getProperty("alfresco.probe.host", hostname);
-
+    String probeHost = globalProperties.getProperty("alfresco.probe.host");
+    if (probeHost == null) {
+      probeHost = super.getProbeHost();
+    }
     return probeHost;
   }
 
