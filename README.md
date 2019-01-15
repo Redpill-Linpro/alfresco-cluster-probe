@@ -49,12 +49,12 @@ The user can control what text and HTTP status a "probe"-page will return. This 
 The following endpoints are available out of the box:
 
 Share:
-* http://localhost:8081/share/service/org/redpill/alfresco/clusterprobe/probe - Will return the probe status and text for share
-* http://localhost:8081/share/service/org/redpill/alfresco/clusterprobe/probe/repo - Will return the probe status and text for the repository node that this share node is currently connected to
-* http://localhost:8081/share/service/org/redpill/alfresco/clusterprobe/probe/search - Will return the probe status of the search e
+* http://localhost:8081/share/noauth/org/redpill/alfresco/clusterprobe/probe - Will return the probe status and text for share
+* http://localhost:8081/share/noauth/org/redpill/alfresco/clusterprobe/probe/repo - Will return the probe status and text for the repository node that this share node is currently connected to
+* http://localhost:8081/share/noauth/org/redpill/alfresco/clusterprobe/probe/search - Will return the probe status of the search e
 ngine that the current repo node uses
-* http://localhost:8081/share/service/org/redpill/alfresco/clusterprobe/probe/transform/docx/pdf - Will return the probe status of transforms between docx and pdf on the repo node that this share node is currently connected to
-* http://localhost:8081/share/service/org/redpill/alfresco/clusterprobe/probe/transform/docx/png - Will return the probe status of transforms between docx and png on the repo node that this share node is currently connected to
+* http://localhost:8081/share/noauth/org/redpill/alfresco/clusterprobe/probe/transform/docx/pdf - Will return the probe status of transforms between docx and pdf on the repo node that this share node is currently connected to
+* http://localhost:8081/share/noauth/org/redpill/alfresco/clusterprobe/probe/transform/docx/png - Will return the probe status of transforms between docx and png on the repo node that this share node is currently connected to
 
 Repository:
 * http://localhost:8080/alfresco/service/org/redpill/alfresco/clusterprobe/probe - Will return the probe status of the targeted repository node
