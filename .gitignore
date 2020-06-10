@@ -5,3 +5,6 @@ alf_data_dev
 .settings
 .project
 .classpath
+.idea
+*.iml
+.java-version
