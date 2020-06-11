@@ -1,0 +1,32 @@
+#cluster-settings-table {
+    border: 2px solid;
+}
+
+#cluster-settings-table td {
+    width: 20%;
+    padding-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+#cluster-settings-table .serverRow:nth-child(odd){
+  background: #cccccc36;
+}
+#cluster-settings-table .serverRow:nth-child(even){
+  background: #FFF;
+}
+#cluster-settings-table input {
+    float: right;
+}
+
+#cluster-settings-table tr{
+    border: 1px solid;
+}
+
+.textCell{
+    padding-left: 5px;
+}
+
+.headerCell{
+}
+

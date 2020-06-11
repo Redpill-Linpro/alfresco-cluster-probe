@@ -5,8 +5,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.json.JSONException;
-import org.json.JSONObject;
-import org.redpill.alfresco.clusterprobe.Settings;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.extensions.webscripts.Cache;
 import org.springframework.extensions.webscripts.DeclarativeWebScript;
@@ -26,16 +28,17 @@ public class SettingsPost extends DeclarativeWebScript {
     Map<String, Object> model = new HashMap<String, Object>();
 
     String server;
-    String text;
-    int code;
+    String type;
+    boolean value;
 
     try {
-      JSONObject json = new JSONObject(req.getContent().getContent());
+      JSONParser jsonParser = new JSONParser();
+      JSONObject json = (JSONObject) jsonParser.parse(req.getContent().getContent());
 
-      server = json.has("server") ? json.getString("server") : null;
-      text = json.has("text") ? json.getString("text") : null;
-      code = json.has("code") ? json.getInt("code") : 0;
-    } catch (JSONException | IOException ex) {
+      server = (String) json.get("server");
+      type = (String) json.get("type");
+      value = (boolean) json.get("value");
+    } catch ( IOException | ParseException ex) {
       throw new RuntimeException(ex);
     }
 
@@ -46,23 +49,30 @@ public class SettingsPost extends DeclarativeWebScript {
       return model;
     }
 
-    if (!StringUtils.hasText(text)) {
+    if (!StringUtils.hasText(type)) {
       status.setCode(Status.STATUS_BAD_REQUEST);
-      status.setMessage("The required parameter text is not set.");
+      status.setMessage("The required parameter type is not set.");
       status.setRedirect(true);
       return model;
     }
 
-    if (code == 0) {
-      status.setCode(Status.STATUS_BAD_REQUEST);
-      status.setMessage("The required parameter code is not set.");
+
+    JSONArray settingsJSON = _clusterProbeUtils.getSettingsJSON();
+    for (Object o : settingsJSON) {
+      JSONObject json = (JSONObject) o;
+      String serverName = (String) json.get("serverName");
+      if(serverName.equals(server)){
+        json.put(type, value);
+        break;
+      }
+    }
+
+    if(!_clusterProbeUtils.saveSettingsJSON(settingsJSON)){
+      status.setCode(Status.STATUS_INTERNAL_SERVER_ERROR);
+      status.setMessage("Failed to save changes");
       status.setRedirect(true);
       return model;
     }
-
-    Settings settings = new Settings(text, code);
-    _clusterProbeUtils.saveSettings(server, settings);
-
     return model;
   }
 

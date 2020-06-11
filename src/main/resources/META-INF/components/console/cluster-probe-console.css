@@ -93,3 +93,11 @@
 	margin: 0;
 	font-family: monospace;
 }
+
+.cluster-settings-table{
+    width 100%;
+}
+
+.cluster-settings-table .yui-dt-liner{
+  width: 100% !important;
+}

@@ -27,7 +27,7 @@ import org.springframework.stereotype.Component;
  * @author Marcus Svartmark - Redpill Linpro AB
  */
 @Component("webscript.org.redpill.alfresco.clusterprobe.probetransform.get")
-public class ProbeTransform extends AbstractProbe {
+public class ProbeTransform extends AbstractRepoProbe {
 
   private static final Logger LOG = Logger.getLogger(ProbeTransform.class);
 
@@ -128,6 +128,11 @@ public class ProbeTransform extends AbstractProbe {
     }
 
     return settings;
+  }
+
+  @Override
+  protected String getType() {
+    return "transform";
   }
 
   @Override

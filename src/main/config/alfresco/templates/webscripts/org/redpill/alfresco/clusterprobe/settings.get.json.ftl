@@ -1,1 +1,7 @@
-{ "text": "${text}", "code": ${code} }
+{
+    "result": ${result},
+    "httpOnline": ${httpOnline},
+    "httpOffline": ${httpOffline},
+    "onlineText": "${onlineText}",
+    "offlineText": "${offlineText}"
+}

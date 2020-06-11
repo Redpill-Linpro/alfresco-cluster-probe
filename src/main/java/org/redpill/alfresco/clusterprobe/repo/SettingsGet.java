@@ -3,8 +3,11 @@ package org.redpill.alfresco.clusterprobe.repo;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.redpill.alfresco.clusterprobe.Settings;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.extensions.webscripts.Cache;
 import org.springframework.extensions.webscripts.DeclarativeWebScript;
 import org.springframework.extensions.webscripts.Status;
@@ -17,16 +20,27 @@ public class SettingsGet extends DeclarativeWebScript {
   @Autowired
   private ClusterProbeUtils _clusterProbeUtils;
 
+  @Value("${cluster.probe.online.httpcode}")
+  protected int onlineHttpCode;
+  @Value("${cluster.probe.offline.httpcode}")
+  protected int offlineHttpCode;
+
+  @Value("${cluster.probe.online.text}")
+  protected String onlineText;
+  @Value("${cluster.probe.offline.text}")
+
+  protected String offlineText;
   @Override
   protected Map<String, Object> executeImpl(final WebScriptRequest req, final Status status, final Cache cache) {
-    final Map<String, Object> result = new HashMap<String, Object>();
+    final Map<String, Object> result = new HashMap<>();
 
-    final String server = req.getParameter("server");
+    JSONArray settingsJSON = _clusterProbeUtils.getSettingsJSON();
 
-    final Settings settings = _clusterProbeUtils.getSettings(server);
-
-    result.put("text", settings.text);
-    result.put("code", settings.code);
+    result.put("result", settingsJSON.toJSONString());
+    result.put("httpOnline", onlineHttpCode);
+    result.put("httpOffline", offlineHttpCode);
+    result.put("onlineText", onlineText);
+    result.put("offlineText", offlineText);
 
     return result;
   }

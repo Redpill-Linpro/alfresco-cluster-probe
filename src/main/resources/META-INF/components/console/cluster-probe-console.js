@@ -14,7 +14,7 @@ if (typeof RL == "undefined" || !RL) {
  * @namespace Alfresco
  * @class RL.ClusterProbeConsole
  */
-(function() {
+(function () {
    /**
     * YUI Library aliases
     */
@@ -33,7 +33,7 @@ if (typeof RL == "undefined" || !RL) {
     * @return {RL.ClusterProbeConsole} The new ClusterProbeConsole instance
     * @constructor
     */
-   RL.ClusterProbeConsole = function(htmlId) {
+   RL.ClusterProbeConsole = function (htmlId) {
       this.name = "RL.ClusterProbeConsole";
       RL.ClusterProbeConsole.superclass.constructor.call(this, htmlId);
 
@@ -41,7 +41,7 @@ if (typeof RL == "undefined" || !RL) {
       Alfresco.util.ComponentManager.register(this);
 
       /* Load YUI Components */
-      Alfresco.util.YUILoaderHelper.require([ "button", "container", "datasource", "datatable", "paginator", "json", "history" ], this.onComponentsLoaded, this);
+      Alfresco.util.YUILoaderHelper.require(["button", "container", "datasource", "datatable", "paginator", "json", "history"], this.onComponentsLoaded, this);
 
       /* Define panel handlers */
       var parent = this;
@@ -57,32 +57,86 @@ if (typeof RL == "undefined" || !RL) {
           * 
           * @method onLoad
           */
-         onLoad : function onLoad() {
-            parent.widgets.textField = Dom.get(parent.id + "-http-response-text");
-            parent.widgets.codeField = Dom.get(parent.id + "-http-response-code");
+         onLoad: function onLoad() {
 
-            // Buttons
-            parent.widgets.saveButton = Alfresco.util.createYUIButton(parent, "save-button", parent.onSaveClick);
+            parent.widgets.dataSource = new YAHOO.util.DataSource(Alfresco.constants.PROXY_URI + "org/redpill/alfresco/clusterprobe/settings.json", {
+               responseType: YAHOO.util.DataSource.TYPE_JSON,
+               responseSchema: {
+                  resultsList: "result"
+               }
+            });
 
-            new YAHOO.util.KeyListener(parent.widgets.textField, {
-               keys : YAHOO.util.KeyListener.KEY.ENTER
+            this._setupDataTable();
+         },
+
+         _setupDataTable: function () {
+
+            var renderCellCheckbox = function (cell, record, column, data) {
+               var active = data == "true";
+               var checked = active ? "checked" : "";
+               var serverName = record._oData.serverName;
+               var type = column.field;
+               var id = type + "-" + serverName;
+               cell.innerHTML = "<input id='" + id + "'type=" + '"checkbox"'  + checked + '/>';
+               console.log(cell);
+            };
+
+
+            var renderCellInnerHTML = function (cell, record, column, data) {
+               cell.innerHTML = $html(data);
+            };
+
+            var columnDefinitions = [{
+               key: "serverName",
+               label: "Hostname",
+               sortable: false,
+               formatter: renderCellInnerHTML
+            },{
+               key: "description",
+               label: "Description",
+               sortable: false,
+               formatter: renderCellInnerHTML
+            },
+             {
+               key: "repo",
+               label: "Repo",
+               sortable: false,
+               formatter: renderCellCheckbox
             }, {
-               fn : function() {
-                  parent.onSaveClick();
-               },
-               scope : this,
-               correctScope : true
-            }, "keydown").enable();
-
-            new YAHOO.util.KeyListener(parent.widgets.codeField, {
-               keys : YAHOO.util.KeyListener.KEY.ENTER
+               key: "share",
+               label: "Share",
+               sortable: false,
+               formatter: renderCellCheckbox
             }, {
-               fn : function() {
-                  parent.onSaveClick();
-               },
-               scope : this,
-               correctScope : true
-            }, "keydown").enable();
+               key: "search",
+               label: "Search",
+               sortable: false,
+               formatter: renderCellCheckbox
+            }
+            ];
+
+            // Customize request sent to server to be able to set total # of records
+            var generateRequest = function (oState, oSelf) {
+               // Get states or use defaults
+               oState = oState || {
+                  pagination: null,
+                  sortedBy: null
+               };
+               // Initial request when load the page
+               return "";
+            };
+
+            parent.widgets.dataTable = new YAHOO.widget.DataTable(parent.id + "-result", columnDefinitions, parent.widgets.dataSource, {
+               MSG_EMPTY: parent.msg("message.empty"),
+               dynamicData: true,
+               generateRequest: generateRequest,
+               initialRequest: generateRequest()
+            });
+
+            parent.widgets.dataTable.doBeforeLoadData = function (request, response, payload) {
+               return payload;
+            }
+
          }
       });
 
@@ -93,7 +147,7 @@ if (typeof RL == "undefined" || !RL) {
 
    YAHOO.extend(RL.ClusterProbeConsole, Alfresco.ConsoleTool, {
 
-      loadProbeSettings : function ACJC_loadProbeSettings(settings) {
+      loadProbeSettings: function ACJC_loadProbeSettings(settings) {
          this.widgets.textField.value = settings.text;
          this.widgets.codeField.value = settings.code;
       },
@@ -105,28 +159,9 @@ if (typeof RL == "undefined" || !RL) {
        * 
        * @method onReady
        */
-      onReady : function ACJC_onReady() {
+      onReady: function ACJC_onReady() {
          // Call super-class onReady() method
          RL.ClusterProbeConsole.superclass.onReady.call(this);
-         var self = this;
-         var server = this.options.server;
-
-         // Load Scripts from Repository
-         Alfresco.util.Ajax.request({
-            url : Alfresco.constants.PROXY_URI + "org/redpill/alfresco/clusterprobe/settings.json",
-            method : Alfresco.util.Ajax.GET,
-            dataObj : {
-               "server" : server
-            },
-            requestContentType : Alfresco.util.Ajax.JSON,
-            successCallback : {
-               fn : function(res) {
-                  var settings = res.json;
-                  this.loadProbeSettings(settings);
-               },
-               scope : this
-            }
-         });
       },
 
       /**
@@ -134,32 +169,32 @@ if (typeof RL == "undefined" || !RL) {
        * 
        * @method onSaveClick
        */
-      onSaveClick : function(e, p_obj) {
+      onSaveClick: function (e, p_obj) {
          var self = this;
 
          Alfresco.util.Ajax.jsonRequest({
-            url : Alfresco.constants.PROXY_URI + "org/redpill/alfresco/clusterprobe/settings.json",
-            method : Alfresco.util.Ajax.POST,
-            dataObj : {
-               "server" : self.options.server,
-               "text" : self.widgets.textField.value,
-               "code" : self.widgets.codeField.value
+            url: Alfresco.constants.PROXY_URI + "org/redpill/alfresco/clusterprobe/settings.json",
+            method: Alfresco.util.Ajax.POST,
+            dataObj: {
+               "server": self.options.server,
+               "text": self.widgets.textField.value,
+               "code": self.widgets.codeField.value
             },
-            successCallback : {
-               fn : function(res) {
+            successCallback: {
+               fn: function (res) {
                   Alfresco.util.PopupManager.displayMessage({
-                     text : self.msg("save.success")
+                     text: self.msg("save.success")
                   });
                },
-               scope : this
+               scope: this
             },
-            failureCallback : {
-               fn : function() {
+            failureCallback: {
+               fn: function () {
                   Alfresco.util.PopupManager.displayMessage({
-                     text : self.msg("save.failure")
+                     text: self.msg("save.failure")
                   });
                },
-               scope : this
+               scope: this
             }
          });
       }
