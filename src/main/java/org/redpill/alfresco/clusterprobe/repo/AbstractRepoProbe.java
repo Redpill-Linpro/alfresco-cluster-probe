@@ -12,9 +12,9 @@ import org.springframework.extensions.webscripts.WebScriptRequest;
 
 public abstract class AbstractRepoProbe extends AbstractProbe {
     private static final Logger LOG = Logger.getLogger(AbstractRepoProbe.class);
+
     @Value("${cluster.probe.host}")
     protected String configuredServer;
-
 
     @Value("${cluster.probe.online.httpcode}")
     protected int onlineHttpCode;

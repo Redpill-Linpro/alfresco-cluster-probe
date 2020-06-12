@@ -95,9 +95,31 @@
 }
 
 .cluster-settings-table{
-    width 100%;
+    width: 100%;
+    margin-top: 10px;
+}
+.cluster-settings-table table   {
+    width: 100%;
 }
 
 .cluster-settings-table .yui-dt-liner{
   width: 100% !important;
+}
+
+.settings-info{
+    display: grid;
+}
+
+.settings-info span{
+    margin-left: 5px;
+}
+
+.test-link{
+    color: blue !important;
+    text-decoration: underline !important;
+    margin-right: 5px;
+}
+
+.test-link:visited{
+    color: purple !important;
 }

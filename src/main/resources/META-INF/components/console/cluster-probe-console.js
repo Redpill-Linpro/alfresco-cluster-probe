@@ -59,6 +59,7 @@ if (typeof RL == "undefined" || !RL) {
           */
          onLoad: function onLoad() {
 
+            this._setupConfigText();
             parent.widgets.dataSource = new YAHOO.util.DataSource(Alfresco.constants.PROXY_URI + "org/redpill/alfresco/clusterprobe/settings.json", {
                responseType: YAHOO.util.DataSource.TYPE_JSON,
                responseSchema: {
@@ -67,18 +68,52 @@ if (typeof RL == "undefined" || !RL) {
             });
 
             this._setupDataTable();
-         },
 
+         },
+         _setupConfigText: function () {
+            Alfresco.util.Ajax.jsonRequest({
+               url: Alfresco.constants.PROXY_URI + "org/redpill/alfresco/clusterprobe/settings.json",
+               method: Alfresco.util.Ajax.GET,
+               successCallback: {
+                  fn: function (res) {
+                     document.getElementById("httpOnlineCode").innerText += " " + res.json.httpOnline;
+                     document.getElementById("httpOfflineCode").innerText += " " + res.json.httpOffline;
+                     document.getElementById("httpOnlineText").innerText += " " + res.json.onlineText;
+                     document.getElementById("httpOfflineText").innerText += " " + res.json.offlineText;
+                  },
+                  scope: this
+               },
+               failureCallback: {
+                  fn: function () {
+                  },
+                  scope: this
+               }
+            });
+         },
          _setupDataTable: function () {
 
             var renderCellCheckbox = function (cell, record, column, data) {
-               var active = data == "true";
-               var checked = active ? "checked" : "";
+
                var serverName = record._oData.serverName;
                var type = column.field;
                var id = type + "-" + serverName;
-               cell.innerHTML = "<input id='" + id + "'type=" + '"checkbox"'  + checked + '/>';
-               console.log(cell);
+               var cellInput = document.createElement("input");
+               cellInput.type = "checkbox";
+               cellInput.id=id;
+               cellInput.checked = data ? "checked" : "";
+               cellInput.disabled = data == null ? "disabled" : "";
+               cellInput.addEventListener("change", parent.onSaveClick);
+
+               var link = document.createElement("a");
+               link.href = Alfresco.constants.PROXY_URI + "org/redpill/alfresco/clusterprobe/probe/" + type + "/" + serverName;
+               link.innerText = "TEST";
+               link.target = "_blank";
+               link.classList.add("test-link");
+               link.hidden = data == null ? "disabled" : "";
+
+               cell.appendChild(link);
+               cell.appendChild(cellInput);
+
             };
 
 
@@ -91,13 +126,13 @@ if (typeof RL == "undefined" || !RL) {
                label: "Hostname",
                sortable: false,
                formatter: renderCellInnerHTML
-            },{
+            }, {
                key: "description",
                label: "Description",
                sortable: false,
                formatter: renderCellInnerHTML
             },
-             {
+            {
                key: "repo",
                label: "Repo",
                sortable: false,
@@ -171,28 +206,27 @@ if (typeof RL == "undefined" || !RL) {
        */
       onSaveClick: function (e, p_obj) {
          var self = this;
-
+         var idSplit = event.target.id.split("-");
+         var type = idSplit[0];
+         var server = idSplit[1];
+         var value = event.target.checked;
          Alfresco.util.Ajax.jsonRequest({
             url: Alfresco.constants.PROXY_URI + "org/redpill/alfresco/clusterprobe/settings.json",
             method: Alfresco.util.Ajax.POST,
             dataObj: {
-               "server": self.options.server,
-               "text": self.widgets.textField.value,
-               "code": self.widgets.codeField.value
+               'server': server,
+               'type': type,
+               'value': value
             },
             successCallback: {
                fn: function (res) {
-                  Alfresco.util.PopupManager.displayMessage({
-                     text: self.msg("save.success")
-                  });
+                  window.location.reload();
                },
                scope: this
             },
             failureCallback: {
                fn: function () {
-                  Alfresco.util.PopupManager.displayMessage({
-                     text: self.msg("save.failure")
-                  });
+                  window.location.reload();
                },
                scope: this
             }

@@ -125,11 +125,22 @@
      var tableCell = document.createElement("td");
      var cellInput = document.createElement("input");
      cellInput.checked = active;
+     cellInput.disabled = active == null;
      cellInput.id = type + "-" + server;
      cellInput.type = "checkbox";
      cellInput.addEventListener("click", checkBoxChangeFunction);
+
+     var link = document.createElement("a");
+     link.href =  "${url.serviceContext}/org/redpill/alfresco/clusterprobe/probe/" + type + "/" + server;
+     link.innerText = "TEST";
+     link.target = "_blank";
+     link.classList.add("test-link");
+     link.hidden = active == null;
+
+     tableCell.appendChild(link);
      tableCell.appendChild(cellInput);
      tableCell.classList.add("inputCell");
+
 
      return tableCell;
 

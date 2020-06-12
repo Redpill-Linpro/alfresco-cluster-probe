@@ -1,10 +1,10 @@
 <webscript>
   <shortname>Probe current application and return an answer</shortname>
   <description></description>
-  <url>/com/redpill/alfresco/clusterprobe/probe</url>
-  <url>/com/redpill/alfresco/clusterprobe/probe/{hostName}</url>
-  <url>/org/redpill/alfresco/clusterprobe/probe</url>
-  <url>/org/redpill/alfresco/clusterprobe/probe/{hostName}</url>
+  <url>/com/redpill/alfresco/clusterprobe/probe/repo</url>
+  <url>/com/redpill/alfresco/clusterprobe/probe/repo/{hostName}</url>
+  <url>/org/redpill/alfresco/clusterprobe/probe/repo</url>
+  <url>/org/redpill/alfresco/clusterprobe/probe/repo/{hostName}</url>
   <family>Redpill Linpro - Cluster Probe</family>
   <format default="text">argument</format>
   <authentication>none</authentication>
