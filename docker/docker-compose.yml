@@ -1,0 +1,59 @@
+version: '3.4'
+services:
+  alfresco-cluster-probe-share:
+    image: alfresco-share-alfresco-cluster-probe:development
+    build:
+      dockerfile: ./Dockerfile
+      context: ../../../alfresco-cluster-probe-share-docker/target
+    environment:
+      CATALINA_OPTS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=0.0.0.0:8888"
+      REPO_HOST: alfresco-cluster-probe-acs
+      REPO_PORT: 8080
+    ports:
+      - "${share.port}:8080"
+      - "${share.debug.port}:8888"
+  alfresco-cluster-probe-acs:
+    image: alfresco-content-services-alfresco-cluster-probe:development
+    build:
+      dockerfile: ./Dockerfile
+      context: ../../../alfresco-cluster-probe-platform-docker/target
+    environment:
+      CATALINA_OPTS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=0.0.0.0:8888"
+    ports:
+      - "${acs.port}:8080"
+      - "${acs.debug.port}:8888"
+    volumes:
+      - alfresco-cluster-probe-acs-volume:/usr/local/tomcat/alf_data
+    depends_on:
+      - alfresco-cluster-probe-postgres
+  alfresco-cluster-probe-postgres:
+    image: postgres:9.6
+    environment:
+      POSTGRES_DB: alfresco
+      POSTGRES_USER: alfresco
+      POSTGRES_PASSWORD: alfresco
+    command: postgres -c max_connections=300 -c log_min_messages=LOG
+    ports:
+      - "${postgres.port}:5432"
+    volumes:
+      - alfresco-cluster-probe-db-volume:/var/lib/postgresql/data
+  alfresco-cluster-probe-ass:
+    image: alfresco/alfresco-search-services:1.2.0
+    environment:
+      SOLR_ALFRESCO_HOST: alfresco-cluster-probe-acs
+      SOLR_ALFRESCO_PORT: 8080
+      SOLR_SOLR_HOST: alfresco-cluster-probe-ass
+      SOLR_SOLR_PORT: 8983
+      SOLR_CREATE_ALFRESCO_DEFAULTS: alfresco,archive
+    ports:
+      - "8983:8983"
+    volumes:
+      - alfresco-cluster-probe-ass-volume:/opt/alfresco-search-services/contentstore
+      - alfresco-cluster-probe-ass-volume:/opt/alfresco-search-services/data
+volumes:
+  alfresco-cluster-probe-acs-volume:
+    external: true
+  alfresco-cluster-probe-db-volume:
+    external: true
+  alfresco-cluster-probe-ass-volume:
+    external: true

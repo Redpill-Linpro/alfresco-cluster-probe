@@ -1,0 +1,24 @@
+[
+  {
+    "serverName": "localhost",
+    "repo": true,
+    "share": true,
+    "search": true,
+    "description": "locahost server 1"
+  },
+  {
+    "serverName": "localhost1",
+    "share": true,
+    "description": "locahost share server"
+  },
+  {
+    "serverName": "localhost2",
+    "search": true,
+    "description": "locahost search server"
+  },
+  {
+    "serverName": "localhost3",
+    "repo": true,
+    "description": "locahost repo server"
+  }
+]
