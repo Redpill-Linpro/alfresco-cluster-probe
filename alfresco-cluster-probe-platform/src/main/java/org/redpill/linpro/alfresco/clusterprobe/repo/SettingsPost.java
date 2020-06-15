@@ -4,24 +4,26 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.extensions.webscripts.Cache;
 import org.springframework.extensions.webscripts.DeclarativeWebScript;
 import org.springframework.extensions.webscripts.Status;
 import org.springframework.extensions.webscripts.WebScriptRequest;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-@Component("webscript.org.redpill.alfresco.clusterprobe.settings.post")
-public class SettingsPost extends DeclarativeWebScript {
+public class SettingsPost extends DeclarativeWebScript implements InitializingBean {
 
-  @Autowired
   private ClusterProbeUtils _clusterProbeUtils;
-
+  protected List<String> configuredHosts;
   @Override
   protected Map<String, Object> executeImpl(WebScriptRequest req, Status status, Cache cache) {
     Map<String, Object> model = new HashMap<String, Object>();
@@ -44,6 +46,13 @@ public class SettingsPost extends DeclarativeWebScript {
     if (!StringUtils.hasText(server)) {
       status.setCode(Status.STATUS_BAD_REQUEST);
       status.setMessage("The required parameter server is not set.");
+      status.setRedirect(true);
+      return model;
+    }
+
+    if(!configuredHosts.contains(server)){
+      status.setCode(Status.STATUS_BAD_REQUEST);
+      status.setMessage("Server is not configurable");
       status.setRedirect(true);
       return model;
     }
@@ -75,4 +84,15 @@ public class SettingsPost extends DeclarativeWebScript {
     return model;
   }
 
+  @Override
+  public void afterPropertiesSet() throws Exception {
+    Assert.notNull(_clusterProbeUtils,"_clusterProbeUtils is null");
+  }
+
+  public void setClusterProbeUtils(ClusterProbeUtils clusterProbeUtils) {
+    this._clusterProbeUtils = clusterProbeUtils;
+  }
+  public void setConfiguredHosts(String configuredHosts) {
+    this.configuredHosts = Arrays.asList(configuredHosts.split(","));
+  }
 }

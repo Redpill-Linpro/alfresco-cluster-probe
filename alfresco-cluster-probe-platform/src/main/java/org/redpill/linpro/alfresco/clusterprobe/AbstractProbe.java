@@ -5,37 +5,39 @@ import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.redpill.linpro.alfresco.clusterprobe.repo.ClusterProbeUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.extensions.webscripts.AbstractWebScript;
 import org.springframework.extensions.webscripts.WebScriptRequest;
 import org.springframework.extensions.webscripts.WebScriptResponse;
 import org.springframework.extensions.webscripts.servlet.WebScriptServletRequest;
+import org.springframework.util.Assert;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
-public abstract class AbstractProbe extends AbstractWebScript {
+public abstract class AbstractProbe extends AbstractWebScript implements InitializingBean {
 
     protected static final String DEFAULT_SERVER = "localhost";
 
 
     private static final Logger LOG = Logger.getLogger(AbstractProbe.class);
 
-    @Value("${cluster.probe.host}")
     protected String configuredServer;
 
-    @Value("${cluster.probe.online.httpcode}")
     protected int onlineHttpCode;
-    @Value("${cluster.probe.offline.httpcode}")
     protected int offlineHttpCode;
 
-    @Value("${cluster.probe.online.text}")
     protected String onlineText;
-    @Value("${cluster.probe.offline.text}")
     protected String offlineText;
-    @Autowired
+
+    protected List<String> configuredHosts;
+
+
+    private String probeType;
+
     protected ClusterProbeUtils _clusterProbeUtils;
 
     @Override
@@ -114,6 +116,7 @@ public abstract class AbstractProbe extends AbstractWebScript {
         if (!StringUtils.isEmpty(hostName)) {
             server = hostName;
         }
+        checkConfiguredServer(server);
 
         JSONObject serverObject = null;
         for (Object o : serverObjects) {
@@ -141,5 +144,53 @@ public abstract class AbstractProbe extends AbstractWebScript {
 
     }
 
-    protected abstract String getType();
+    protected void checkConfiguredServer(String server) {
+        if (!configuredHosts.contains(server)) {
+            throw new RuntimeException("Server " + server + " is not configured");
+        }
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        Assert.notNull(_clusterProbeUtils, "_clusterProbeUtils is null");
+        Assert.notNull(probeType, "probeType is null");
+    }
+
+    protected String getType() {
+        return probeType;
+    }
+
+
+    public void setConfiguredServer(String configuredServer) {
+
+        this.configuredServer = configuredServer;
+    }
+
+    public void setOnlineHttpCode(int onlineHttpCode) {
+        this.onlineHttpCode = onlineHttpCode;
+    }
+
+    public void setOfflineHttpCode(int offlineHttpCode) {
+        this.offlineHttpCode = offlineHttpCode;
+    }
+
+    public void setOnlineText(String onlineText) {
+        this.onlineText = onlineText;
+    }
+
+    public void setOfflineText(String offlineText) {
+        this.offlineText = offlineText;
+    }
+
+    public void setClusterProbeUtils(ClusterProbeUtils clusterProbeUtils) {
+        this._clusterProbeUtils = clusterProbeUtils;
+    }
+
+    public void setProbeType(String probeType) {
+        this.probeType = probeType;
+    }
+
+    public void setConfiguredHosts(String configuredHosts) {
+        this.configuredHosts = Arrays.asList(configuredHosts.split(","));
+    }
 }

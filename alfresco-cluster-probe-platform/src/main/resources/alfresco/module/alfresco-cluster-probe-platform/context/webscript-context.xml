@@ -20,4 +20,67 @@
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans
           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
+	<bean id="webscript.org.redpill.alfresco.clusterprobe.abstractprobe"
+		  class="org.redpill.linpro.alfresco.clusterprobe.AbstractProbe"
+		  parent="webscript"
+		  abstract="true">
+		<property name="clusterProbeUtils" ref="cp.ClusterProbeUtils"/>
+		<property name="configuredServer" value="${cluster.probe.host}"/>
+		<property name="configuredHosts" value="${cluster.probe.hosts}"/>
+		<property name="onlineHttpCode" value="${cluster.probe.online.httpcode}"/>
+		<property name="offlineHttpCode" value="${cluster.probe.offline.httpcode}"/>
+		<property name="onlineText" value="${cluster.probe.online.text}"/>
+		<property name="offlineText" value="${cluster.probe.offline.text}"/>
+	</bean>
+
+	<bean id="webscript.org.redpill.alfresco.clusterprobe.settings.post"
+		  class="org.redpill.linpro.alfresco.clusterprobe.repo.SettingsPost"
+		  parent="webscript">
+		<property name="clusterProbeUtils" ref="cp.ClusterProbeUtils"/>
+		<property name="configuredHosts" value="${cluster.probe.hosts}"/>
+	</bean>
+
+	<bean id="webscript.org.redpill.alfresco.clusterprobe.settings.get"
+		  class="org.redpill.linpro.alfresco.clusterprobe.repo.SettingsGet"
+		  parent="webscript">
+		<property name="clusterProbeUtils" ref="cp.ClusterProbeUtils"/>
+		<property name="onlineHttpCode" value="${cluster.probe.online.httpcode}"/>
+		<property name="offlineHttpCode" value="${cluster.probe.offline.httpcode}"/>
+		<property name="onlineText" value="${cluster.probe.online.text}"/>
+		<property name="offlineText" value="${cluster.probe.offline.text}"/>
+		<property name="configuredHosts" value="${cluster.probe.hosts}"/>
+	</bean>
+
+	<bean id="webscript.org.redpill.alfresco.clusterprobe.cluster-probe-ui.get"
+		  class="org.redpill.linpro.alfresco.clusterprobe.repo.ClusterProbeUIGet"
+		  parent="webscript">
+		<property name="probeConfiguration" ref="cp.clusterProbeRepoConfiguration"/>
+	</bean>
+
+	<bean id="webscript.org.redpill.alfresco.clusterprobe.probe.get"
+		  class="org.redpill.linpro.alfresco.clusterprobe.repo.DefaultProbe"
+		  parent="webscript.org.redpill.alfresco.clusterprobe.abstractprobe">
+		<property name="probeType" value="repo" />
+	</bean>
+
+	<bean id="webscript.org.redpill.alfresco.clusterprobe.probeshare.get"
+		  class="org.redpill.linpro.alfresco.clusterprobe.repo.DefaultProbe"
+		  parent="webscript.org.redpill.alfresco.clusterprobe.abstractprobe">
+		<property name="probeType" value="share" />
+	</bean>
+
+	<bean id="webscript.org.redpill.alfresco.clusterprobe.probesearch.get"
+		  class="org.redpill.linpro.alfresco.clusterprobe.repo.ProbeSearch"
+		  parent="webscript.org.redpill.alfresco.clusterprobe.abstractprobe">
+		<property name="probeType" value="search" />
+		<property name="searchService" ref="SearchService"/>
+	</bean>
+
+	<bean id="webscript.org.redpill.alfresco.clusterprobe.probetransform.get"
+		  class="org.redpill.linpro.alfresco.clusterprobe.repo.ProbeTransform"
+		  parent="webscript.org.redpill.alfresco.clusterprobe.abstractprobe">
+		<property name="probeConfiguration" ref="cp.clusterProbeRepoConfiguration"/>
+		<property name="contentService" ref="ContentService"/>
+		<property name="probeType" value="share" />
+	</bean>
 </beans>

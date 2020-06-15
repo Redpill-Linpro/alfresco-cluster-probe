@@ -12,6 +12,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 import org.redpill.linpro.alfresco.clusterprobe.ClusterProbeModel;
 import org.redpill.linpro.alfresco.clusterprobe.Settings;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,30 +25,23 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
-@Component("cp.clusterProbeUtils")
-public class ClusterProbeUtils {
+public class ClusterProbeUtils implements InitializingBean {
 
-    @Autowired
-    @Qualifier("SearchService")
+
     private SearchService _searchService;
 
-    @Autowired
-    @Qualifier("repositoryHelper")
+
     private Repository _repository;
 
-    @Autowired
-    @Qualifier("NamespaceService")
+
     private NamespaceService _namespaceService;
 
-    @Autowired
-    @Qualifier("NodeService")
+
     private NodeService _nodeService;
 
-    @Autowired
-    @Qualifier("FileFolderService")
+
     private FileFolderService _fileFolderService;
 
-    @Value("${cluster.probe.diskpath}")
     protected String confProbeDiscPath;
 
     public Settings getSettings(final String server) {
@@ -210,4 +204,28 @@ public class ClusterProbeUtils {
         _nodeService = nodeService;
     }
 
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        Assert.notNull(_nodeService, "_nodeService is null");
+        Assert.notNull(_namespaceService, "_namespaceService is null");
+        Assert.notNull(_searchService, "_searchService is null");
+        Assert.notNull(_fileFolderService, "_fileFolderService is null");
+    }
+
+
+
+
+
+    public void setNamespaceService(NamespaceService namespaceService) {
+        this._namespaceService = namespaceService;
+    }
+
+
+    public void setFileFolderService(FileFolderService fileFolderService) {
+        this._fileFolderService = fileFolderService;
+    }
+
+    public void setConfProbeDiscPath(String confProbeDiscPath) {
+        this.confProbeDiscPath = confProbeDiscPath;
+    }
 }

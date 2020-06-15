@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.extensions.webscripts.WebScriptRequest;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 import java.io.File;
 import java.io.InputStream;
@@ -26,17 +27,14 @@ import java.util.Map;
  *
  * @author Marcus Svartmark - Redpill Linpro AB
  */
-@Component("webscript.org.redpill.alfresco.clusterprobe.probetransform.get")
 public class ProbeTransform extends AbstractProbe {
 
   private static final Logger LOG = Logger.getLogger(ProbeTransform.class);
 
-  @Autowired
-  @Qualifier("cp.clusterProbeRepoConfiguration")
+
   private ProbeConfiguration probeConfiguration;
 
-  @Autowired
-  @Qualifier("ContentService")
+
   protected ContentService contentService;
 
   protected Pair<String, String> parseRequestedTransformation(final WebScriptRequest req) {
@@ -115,7 +113,7 @@ public class ProbeTransform extends AbstractProbe {
   @Override
   protected Settings getProbeSettings(final WebScriptRequest req) {
     final String server = getServer();
-
+    checkConfiguredServer(server);
     final Settings settings = new Settings("Transformation is working on server " + server, 200);
     Pair<String, String> parseRequestedTransformation = parseRequestedTransformation(req);
     try {
@@ -130,14 +128,23 @@ public class ProbeTransform extends AbstractProbe {
     return settings;
   }
 
-  @Override
-  protected String getType() {
-    return "transform";
-  }
 
   @Override
   protected String getConfiguredServer() {
     return probeConfiguration.getProbeHost();
   }
 
+  public void setProbeConfiguration(ProbeConfiguration probeConfiguration) {
+    this.probeConfiguration = probeConfiguration;
+  }
+
+  public void setContentService(ContentService contentService) {
+    this.contentService = contentService;
+  }
+  @Override
+  public void afterPropertiesSet() throws Exception {
+    super.afterPropertiesSet();
+    Assert.notNull(probeConfiguration, "probeConfiguration is null");
+    Assert.notNull(contentService, "contentService is null");
+  }
 }

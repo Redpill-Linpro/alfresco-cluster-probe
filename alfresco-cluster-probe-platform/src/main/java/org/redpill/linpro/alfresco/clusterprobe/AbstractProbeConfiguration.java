@@ -12,7 +12,6 @@ import java.util.logging.Logger;
 public abstract class AbstractProbeConfiguration implements ProbeConfiguration {
 
   public static final String HOSTNAME_ENV_CUSTOM_REPO = "ALFRESCO_PROBE_REPO_HOST";
-  public static final String HOSTNAME_ENV_CUSTOM_SHARE = "ALFRESCO_PROBE_SHARE_HOST";
   public static final String HOSTNAME_DEFAULT = "localhost";
 
   /**

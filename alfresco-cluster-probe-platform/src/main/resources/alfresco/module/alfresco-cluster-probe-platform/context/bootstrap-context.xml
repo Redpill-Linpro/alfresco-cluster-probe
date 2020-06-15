@@ -9,11 +9,6 @@
 
     <!-- Registration of new models -->
     <bean id="alfresco-cluster-probe-platform.dictionaryBootstrap" parent="dictionaryModelBootstrap" depends-on="dictionaryBootstrap">
-        <property name="models">
-            <list>
-                <value>alfresco/module/${project.artifactId}/model/clusterProbeModel.xml</value>
-            </list>
-        </property>
         <property name="labels">
             <list>
                 <!-- Bootstrap Resource Bundles for the content model types, aspects, properties etc -->
