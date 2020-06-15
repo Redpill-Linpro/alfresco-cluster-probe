@@ -60,7 +60,7 @@ public class ProbeTransform extends AbstractProbe {
         InputStream resourceAsStream = null;
         OutputStream outStream = null;
         File createTempFile = File.createTempFile("test" + System.currentTimeMillis(), ".docx");
-        resourceAsStream = this.getClass().getResourceAsStream("/test.docx");
+        resourceAsStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("META-INF/resources/test.docx");
         if (resourceAsStream == null) {
           throw new AlfrescoRuntimeException("Could not find test.docx to test transformer on");
         }
@@ -88,7 +88,7 @@ public class ProbeTransform extends AbstractProbe {
         InputStream resourceAsStream = null;
         OutputStream outStream = null;
         File createTempFile = File.createTempFile("test" + System.currentTimeMillis(), ".docx");
-        resourceAsStream = this.getClass().getResourceAsStream("/test.docx");
+        resourceAsStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("META-INF/resources/test.docx");
         if (resourceAsStream == null) {
           throw new AlfrescoRuntimeException("Could not find test.docx to test transformer on");
         }
