@@ -68,7 +68,6 @@ public class ProbeSearch extends AbstractProbe {
                         }
                 );
             } catch (Exception e) {
-                //Set code to 500 on
                 settings.text = server + "-" + offlineText;
                 settings.code = offlineHttpCode;
                 LOG.error("Failed to execute search", e);

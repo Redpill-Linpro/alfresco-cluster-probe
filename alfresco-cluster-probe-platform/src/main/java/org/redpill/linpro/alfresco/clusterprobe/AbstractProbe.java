@@ -6,19 +6,21 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.redpill.linpro.alfresco.clusterprobe.repo.ClusterProbeUtils;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.extensions.webscripts.AbstractWebScript;
+import org.springframework.extensions.webscripts.Cache;
+import org.springframework.extensions.webscripts.DeclarativeWebScript;
+import org.springframework.extensions.webscripts.Status;
 import org.springframework.extensions.webscripts.WebScriptRequest;
-import org.springframework.extensions.webscripts.WebScriptResponse;
 import org.springframework.extensions.webscripts.servlet.WebScriptServletRequest;
 import org.springframework.util.Assert;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public abstract class AbstractProbe extends AbstractWebScript implements InitializingBean {
+public abstract class AbstractProbe extends DeclarativeWebScript implements InitializingBean {
 
     protected static final String DEFAULT_SERVER = "localhost";
 
@@ -41,23 +43,18 @@ public abstract class AbstractProbe extends AbstractWebScript implements Initial
     protected ClusterProbeUtils _clusterProbeUtils;
 
     @Override
-    public void execute(final WebScriptRequest req, final WebScriptResponse res) throws IOException {
+    protected Map<String, Object> executeImpl(WebScriptRequest req, Status status, Cache cache) {
         try {
+
             final Settings settings = getProbeSettings(req);
 
             final int code = settings.code;
             String text = settings.text;
+            Map<String, Object> model = new HashMap<>();
+            model.put("result", text);
+            status.setCode(code);
+            return model;
 
-            res.addHeader("Content-Length", String.valueOf(text.length()));
-            res.addHeader("Cache-Control", "no-cache");
-            res.addHeader("Pragma", "no-cache");
-            res.setContentType("text/plain");
-            res.setContentEncoding("UTF-8");
-            res.setStatus(code);
-            res.getWriter().write(text);
-
-            res.getWriter().flush();
-            res.getWriter().close();
         } catch (final Exception ex) {
             throw new RuntimeException(ex);
         } finally {
@@ -132,8 +129,13 @@ public abstract class AbstractProbe extends AbstractWebScript implements Initial
             LOG.error("Could not find json clusterprobe settings for server " + server);
             return new Settings(server + "-" + offlineText, offlineHttpCode);
         }
+        Object o = serverObject.get(getType());
+        if (o == null) {
+            LOG.error("Could not find json clusterprobe settings for server " + server + ", type " + getType());
+            return new Settings(server + "-" + offlineText, offlineHttpCode);
+        }
+        boolean active = (boolean) o;
 
-        boolean active = (boolean) serverObject.get(getType());
         Settings settings;
         if (active) {
             settings = new Settings(server + "-" + onlineText, onlineHttpCode);

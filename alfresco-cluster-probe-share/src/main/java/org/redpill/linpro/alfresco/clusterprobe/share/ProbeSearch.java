@@ -5,8 +5,7 @@ import org.apache.log4j.Logger;
 import org.redpill.linpro.alfresco.clusterprobe.AbstractProbe;
 import org.redpill.linpro.alfresco.clusterprobe.ProbeConfiguration;
 import org.redpill.linpro.alfresco.clusterprobe.Settings;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.extensions.surf.RequestContext;
 import org.springframework.extensions.surf.ServletUtil;
 import org.springframework.extensions.surf.support.ThreadLocalRequestContext;
@@ -14,7 +13,8 @@ import org.springframework.extensions.webscripts.WebScriptRequest;
 import org.springframework.extensions.webscripts.connector.Connector;
 import org.springframework.extensions.webscripts.connector.ConnectorService;
 import org.springframework.extensions.webscripts.connector.Response;
-import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpSession;
 
@@ -22,14 +22,12 @@ import javax.servlet.http.HttpSession;
  *
  * @author Marcus Svartmark - Redpill Linpro AB
  */
-@Component("webscript.org.redpill.alfresco.clusterprobe.probesearch.get")
-public class ProbeSearch extends AbstractProbe {
+public class ProbeSearch extends AbstractProbe implements InitializingBean {
 
   private static final Logger LOG = Logger.getLogger(ProbeSearch.class);
   protected static final String ENDPOINT_ID = "alfresco";
 
-  @Autowired
-  @Qualifier("cp.clusterProbeShareConfiguration")
+
   private ProbeConfiguration probeConfiguration;
 
   @Override
@@ -46,8 +44,12 @@ public class ProbeSearch extends AbstractProbe {
 
       final Connector connector = connService.getConnector(ENDPOINT_ID, currentUserId, currentSession);
 
-      final String alfrescoURL = "/org/redpill/alfresco/clusterprobe/probe/search";
+      String alfrescoURL = "/org/redpill/alfresco/clusterprobe/probe/search";
 
+      String hostName = req.getServiceMatch().getTemplateVars().get("hostName");
+      if(!StringUtils.isEmpty(hostName)){
+        alfrescoURL += "/" + hostName;
+      }
       final Response response = connector.call(alfrescoURL);
 
       return new Settings(response.getResponse(), response.getStatus().getCode());
@@ -65,5 +67,12 @@ public class ProbeSearch extends AbstractProbe {
   protected String getConfiguredServer() {
     return probeConfiguration.getProbeHost();
   }
+  @Override
+  public void afterPropertiesSet() throws Exception {
+    Assert.notNull(probeConfiguration, "probeConfiguration");
+  }
 
+  public void setProbeConfiguration(ProbeConfiguration probeConfiguration) {
+    this.probeConfiguration = probeConfiguration;
+  }
 }

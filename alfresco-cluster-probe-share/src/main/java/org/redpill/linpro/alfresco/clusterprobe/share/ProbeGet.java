@@ -2,13 +2,10 @@ package org.redpill.linpro.alfresco.clusterprobe.share;
 
 import org.alfresco.error.StackTraceUtil;
 import org.apache.log4j.Logger;
-import org.json.JSONObject;
-import org.json.JSONTokener;
 import org.redpill.linpro.alfresco.clusterprobe.AbstractProbe;
 import org.redpill.linpro.alfresco.clusterprobe.ProbeConfiguration;
 import org.redpill.linpro.alfresco.clusterprobe.Settings;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.extensions.surf.RequestContext;
 import org.springframework.extensions.surf.ServletUtil;
 import org.springframework.extensions.surf.support.ThreadLocalRequestContext;
@@ -16,18 +13,16 @@ import org.springframework.extensions.webscripts.WebScriptRequest;
 import org.springframework.extensions.webscripts.connector.Connector;
 import org.springframework.extensions.webscripts.connector.ConnectorService;
 import org.springframework.extensions.webscripts.connector.Response;
-import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 import javax.servlet.http.HttpSession;
 
-@Component("webscript.org.redpill.alfresco.clusterprobe.probe.get")
-public class ProbeGet extends AbstractProbe {
+public class ProbeGet extends AbstractProbe implements InitializingBean {
 
   private static final Logger LOG = Logger.getLogger(ProbeGet.class);
   protected static final String ENDPOINT_ID = "alfresco";
 
-  @Autowired
-  @Qualifier("cp.clusterProbeShareConfiguration")
+
   private ProbeConfiguration probeConfiguration;
 
   @Override
@@ -51,9 +46,7 @@ public class ProbeGet extends AbstractProbe {
 
       final String jsonResponse = response.getResponse();
 
-      final JSONObject json = new JSONObject(new JSONTokener(jsonResponse));
-
-      return new Settings(json.getString("text"), json.getInt("code"));
+      return new Settings(jsonResponse, 200);
     } catch (final Exception ex) {
       LOG.error(ex.getMessage(), ex);
       final StringBuilder sb = new StringBuilder();
@@ -69,4 +62,12 @@ public class ProbeGet extends AbstractProbe {
     return probeConfiguration.getProbeHost();
   }
 
+  public void setProbeConfiguration(ProbeConfiguration probeConfiguration) {
+    this.probeConfiguration = probeConfiguration;
+  }
+
+  @Override
+  public void afterPropertiesSet() throws Exception {
+    Assert.notNull(probeConfiguration, "probeConfiguration is null");
+  }
 }

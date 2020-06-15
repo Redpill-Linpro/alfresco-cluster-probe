@@ -1,7 +1,7 @@
 <webscript>
-  <shortname>Script for gettings settings for a specific server.</shortname>
-  <url>/com/redpill/alfresco/clusterprobe/settings?server={server}</url>
-  <url>/org/redpill/alfresco/clusterprobe/settings?server={server}</url>
+  <shortname>Script for getting settings</shortname>
+  <url>/com/redpill/alfresco/clusterprobe/settings</url>
+  <url>/org/redpill/alfresco/clusterprobe/settings?server</url>
   <family>Redpill Linpro - Cluster Probe</family>
   <authentication>none</authentication>
   <format default="json">extension</format>

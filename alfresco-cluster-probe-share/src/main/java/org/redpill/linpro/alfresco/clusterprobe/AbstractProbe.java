@@ -1,77 +1,74 @@
 package org.redpill.linpro.alfresco.clusterprobe;
 
-import org.springframework.extensions.webscripts.AbstractWebScript;
+import org.springframework.extensions.webscripts.Cache;
+import org.springframework.extensions.webscripts.DeclarativeWebScript;
+import org.springframework.extensions.webscripts.Status;
 import org.springframework.extensions.webscripts.WebScriptRequest;
-import org.springframework.extensions.webscripts.WebScriptResponse;
 import org.springframework.extensions.webscripts.servlet.WebScriptServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
-public abstract class AbstractProbe extends AbstractWebScript {
+public abstract class AbstractProbe extends DeclarativeWebScript {
 
-  protected static final String DEFAULT_SERVER = "localhost";
+    protected static final String DEFAULT_SERVER = "localhost";
 
-  @Override
-  public void execute(final WebScriptRequest req, final WebScriptResponse res) throws IOException {
-    try {
-      final Settings settings = getProbeSettings(req);
+    @Override
+    protected Map<String, Object> executeImpl(WebScriptRequest req, Status status, Cache cache) {
+        try {
 
-      final int code = settings.code;
-      String text = settings.text;
+            final Settings settings = getProbeSettings(req);
 
-      res.addHeader("Content-Length", String.valueOf(text.length()));
-      res.addHeader("Cache-Control", "no-cache");
-      res.addHeader("Pragma", "no-cache");
-      res.setContentType("text/plain");
-      res.setContentEncoding("UTF-8");
-      res.setStatus(code);
-      res.getWriter().write(text);
+            final int code = settings.code;
+            String text = settings.text;
+            Map<String, Object> model = new HashMap<>();
+            model.put("text", text);
+            status.setCode(code);
+            return model;
 
-      res.getWriter().flush();
-      res.getWriter().close();
-    } catch (final Exception ex) {
-      throw new RuntimeException(ex);
-    } finally {
-      invalidateSession(req);
-    }
-  }
-
-  private void invalidateSession(WebScriptRequest req) {
-    if (!(req instanceof WebScriptServletRequest)) {
-      return;
+        } catch (final Exception ex) {
+            throw new RuntimeException(ex);
+        } finally {
+            invalidateSession(req);
+        }
     }
 
-    WebScriptServletRequest request = (WebScriptServletRequest) req;
+    private void invalidateSession(WebScriptRequest req) {
+        if (!(req instanceof WebScriptServletRequest)) {
+            return;
+        }
 
-    HttpServletRequest servletRequest = request.getHttpServletRequest();
+        WebScriptServletRequest request = (WebScriptServletRequest) req;
 
-    HttpSession session = servletRequest.getSession(false);
+        HttpServletRequest servletRequest = request.getHttpServletRequest();
 
-    if (session == null) {
-      return;
+        HttpSession session = servletRequest.getSession(false);
+
+        if (session == null) {
+            return;
+        }
+
+        session.invalidate();
     }
 
-    session.invalidate();
-  }
+    protected String getServer() {
+        String server = getConfiguredServer();
 
-  protected String getServer() {
-    String server = getConfiguredServer();
+        if (server == null || server.length() == 0) {
+            server = DEFAULT_SERVER;
+        }
 
-    if (server == null || server.length() == 0) {
-      server = DEFAULT_SERVER;
+        return server;
     }
 
-    return server;
-  }
+    protected abstract String getConfiguredServer();
 
-  protected abstract String getConfiguredServer();
+    protected Settings getProbeSettings() {
+        return getProbeSettings(null);
+    }
 
-  protected Settings getProbeSettings() {
-    return getProbeSettings(null);
-  }
-
-  protected abstract Settings getProbeSettings(final WebScriptRequest req);
+    protected abstract Settings getProbeSettings(final WebScriptRequest req);
 
 }

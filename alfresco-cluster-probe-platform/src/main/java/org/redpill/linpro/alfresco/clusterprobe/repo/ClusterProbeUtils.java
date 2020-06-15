@@ -13,10 +13,6 @@ import org.json.simple.parser.JSONParser;
 import org.redpill.linpro.alfresco.clusterprobe.ClusterProbeModel;
 import org.redpill.linpro.alfresco.clusterprobe.Settings;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import java.io.FileReader;

@@ -12,10 +12,7 @@ import org.apache.log4j.Logger;
 import org.redpill.linpro.alfresco.clusterprobe.AbstractProbe;
 import org.redpill.linpro.alfresco.clusterprobe.ProbeConfiguration;
 import org.redpill.linpro.alfresco.clusterprobe.Settings;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.extensions.webscripts.WebScriptRequest;
-import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import java.io.File;

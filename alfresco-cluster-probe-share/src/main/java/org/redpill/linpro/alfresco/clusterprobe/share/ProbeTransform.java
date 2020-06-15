@@ -6,8 +6,7 @@ import org.apache.log4j.Logger;
 import org.redpill.linpro.alfresco.clusterprobe.AbstractProbe;
 import org.redpill.linpro.alfresco.clusterprobe.ProbeConfiguration;
 import org.redpill.linpro.alfresco.clusterprobe.Settings;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.extensions.surf.RequestContext;
 import org.springframework.extensions.surf.ServletUtil;
 import org.springframework.extensions.surf.support.ThreadLocalRequestContext;
@@ -15,7 +14,7 @@ import org.springframework.extensions.webscripts.WebScriptRequest;
 import org.springframework.extensions.webscripts.connector.Connector;
 import org.springframework.extensions.webscripts.connector.ConnectorService;
 import org.springframework.extensions.webscripts.connector.Response;
-import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 
 import javax.servlet.http.HttpSession;
 import java.util.Map;
@@ -24,14 +23,12 @@ import java.util.Map;
  *
  * @author Marcus Svartmark - Redpill Linpro AB
  */
-@Component("webscript.org.redpill.alfresco.clusterprobe.probetransform.get")
-public class ProbeTransform extends AbstractProbe {
+public class ProbeTransform extends AbstractProbe implements InitializingBean {
 
   private static final Logger LOG = Logger.getLogger(ProbeTransform.class);
   protected static final String ENDPOINT_ID = "alfresco";
 
-  @Autowired
-  @Qualifier("cp.clusterProbeShareConfiguration")
+
   private ProbeConfiguration probeConfiguration;
 
   protected Pair<String, String> parseRequestedTransformation(final WebScriptRequest req) {
@@ -74,5 +71,12 @@ public class ProbeTransform extends AbstractProbe {
   protected String getConfiguredServer() {
     return probeConfiguration.getProbeHost();
   }
+  @Override
+  public void afterPropertiesSet() throws Exception {
+    Assert.notNull(probeConfiguration, "probeConfiguration");
+  }
 
+  public void setProbeConfiguration(ProbeConfiguration probeConfiguration) {
+    this.probeConfiguration = probeConfiguration;
+  }
 }

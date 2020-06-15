@@ -18,12 +18,8 @@ import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpSession;
 
-/**
- * @author Marcus Svartmark - Redpill Linpro AB
- */
-public class ProbeRepoGet extends AbstractProbe implements InitializingBean {
-
-    private static final Logger LOG = Logger.getLogger(ProbeRepoGet.class);
+public class ProbeShareGet extends AbstractProbe implements InitializingBean {
+    private static final Logger LOG = Logger.getLogger(ProbeShareGet.class);
     protected static final String ENDPOINT_ID = "alfresco";
 
 
@@ -32,7 +28,6 @@ public class ProbeRepoGet extends AbstractProbe implements InitializingBean {
     @Override
     protected Settings getProbeSettings(final WebScriptRequest req) {
         try {
-
             final RequestContext requestContext = ThreadLocalRequestContext.getRequestContext();
 
             final ConnectorService connService = requestContext.getServiceRegistry().getConnectorService();
@@ -43,10 +38,10 @@ public class ProbeRepoGet extends AbstractProbe implements InitializingBean {
 
             final Connector connector = connService.getConnector(ENDPOINT_ID, currentUserId, currentSession);
 
-            String alfrescoURL = "/org/redpill/alfresco/clusterprobe/probe/repo";
+            String alfrescoURL = "/org/redpill/alfresco/clusterprobe/probe/share";
 
             String hostName = req.getServiceMatch().getTemplateVars().get("hostName");
-            if (!StringUtils.isEmpty(hostName)) {
+            if(!StringUtils.isEmpty(hostName)){
                 alfrescoURL += "/" + hostName;
             }
             final Response response = connector.call(alfrescoURL);
@@ -67,12 +62,12 @@ public class ProbeRepoGet extends AbstractProbe implements InitializingBean {
         return probeConfiguration.getProbeHost();
     }
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        Assert.notNull(probeConfiguration, "probeConfiguration");
-    }
-
     public void setProbeConfiguration(ProbeConfiguration probeConfiguration) {
         this.probeConfiguration = probeConfiguration;
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        Assert.notNull(probeConfiguration, "probeConfiguration is null");
     }
 }
