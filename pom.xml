@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.redpill-linpro.alfresco</groupId>
     <artifactId>alfresco-cluster-probe</artifactId>
-    <version>2.0.1-SNAPSHOT</version>
+    <version>2.0.0-SNAPSHOT</version>
     <name>AIO - SDK 4.0</name>
     <description>All-In-One (AIO) project for SDK 4.0</description>
     <packaging>pom</packaging>
@@ -83,12 +83,6 @@
             <version>${alfresco.sdk.version}</version>
             <scope>test</scope>
         </dependency>
-
-        <dependency>
-            <groupId>org.redpill-linpro.alfresco</groupId>
-            <artifactId>alfresco-test-repo</artifactId>
-            <version>3.0.1</version>
-        </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -128,6 +122,11 @@
                 <version>${alfresco.share.version}</version>
                 <classifier>classes</classifier>
                 <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.redpill-linpro.alfresco</groupId>
+                <artifactId>alfresco-test-platform</artifactId>
+                <version>${rl.alfresco-test.version}</version>
             </dependency>
 
         </dependencies>
