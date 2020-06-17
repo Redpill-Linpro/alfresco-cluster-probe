@@ -43,6 +43,8 @@ public class ProbeShareGet extends AbstractProbe implements InitializingBean {
             String hostName = req.getServiceMatch().getTemplateVars().get("hostName");
             if(!StringUtils.isEmpty(hostName)){
                 alfrescoURL += "/" + hostName;
+            }else {
+                alfrescoURL += "/" + getConfiguredServer();
             }
             final Response response = connector.call(alfrescoURL);
 

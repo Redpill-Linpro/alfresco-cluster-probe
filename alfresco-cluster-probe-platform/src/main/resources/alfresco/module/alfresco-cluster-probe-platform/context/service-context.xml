@@ -26,7 +26,7 @@
         <property name="searchService" ref="SearchService"/>
         <property name="namespaceService" ref="NamespaceService"/>
         <property name="repository" ref="repositoryHelper"/>
-        <property name="confProbeDiscPath" value="${cluster.probe.diskpath}"/>
+        <property name="confProbeDiscPath" value="${cluster.probe.discpath}"/>
     </bean>
     <bean id="cp.clusterProbeRepoConfiguration" class="org.redpill.linpro.alfresco.clusterprobe.repo.RepoProbeConfigurationImpl">
         <property name="globalProperties" ref="global-properties"/>
