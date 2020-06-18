@@ -9,7 +9,7 @@ import org.redpill.alfresco.test.AbstractWebScriptIT;
 import static io.restassured.RestAssured.given;
 
 public class ProbeShareIT extends AbstractWebScriptIT {
-    private final String host = "localhost";
+    private final String host = "localhost.home.se";
     @Test
     public void probeShareOK() {
 

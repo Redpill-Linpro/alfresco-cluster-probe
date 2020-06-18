@@ -24,7 +24,7 @@ public class PostSettingsIT extends AbstractWebScriptIT {
 
         given().
                 baseUri(getBaseUri())
-                .body("{\"server\":\"localhost\",\"type\":\"repo\",\"value\":" + !boolean1 + "}")
+                .body("{\"server\":\"localhost.home.se\",\"type\":\"repo\",\"value\":" + !boolean1 + "}")
                 .expect()
                 .statusCode(200)
                 .contentType(ContentType.JSON)
@@ -67,7 +67,7 @@ public class PostSettingsIT extends AbstractWebScriptIT {
     public void testPostNoType() {
         given().
                 baseUri(getBaseUri())
-                .body("{\"server\":\"localhost\",\"value\":true}")
+                .body("{\"server\":\"localhost.home.se\",\"value\":true}")
                 .expect()
                 .statusCode(400)
                 .when()
@@ -78,7 +78,7 @@ public class PostSettingsIT extends AbstractWebScriptIT {
     public void testPostUnknownValue() {
         given().
                 baseUri(getBaseUri())
-                .body("{\"server\":\"localhost\",\"type\":\"repo\",\"value\":\"unkownValue\"}")
+                .body("{\"server\":\"localhost.home.se\",\"type\":\"repo\",\"value\":\"unkownValue\"}")
                 .expect()
                 .statusCode(500)
                 .when()

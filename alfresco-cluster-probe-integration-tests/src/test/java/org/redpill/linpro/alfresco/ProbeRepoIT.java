@@ -11,7 +11,7 @@ import static io.restassured.RestAssured.given;
 public class ProbeRepoIT extends AbstractWebScriptIT {
 
 
-    private String host = "localhost";
+    private String host = "localhost.home.se";
 
     @Test
     public void probeRepoOK() {

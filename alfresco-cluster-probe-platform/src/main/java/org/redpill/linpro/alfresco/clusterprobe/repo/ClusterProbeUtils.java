@@ -8,8 +8,10 @@ import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.NodeService;
 import org.alfresco.service.cmr.search.SearchService;
 import org.alfresco.service.namespace.NamespaceService;
+import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
+import org.redpill.linpro.alfresco.clusterprobe.AbstractProbe;
 import org.redpill.linpro.alfresco.clusterprobe.ClusterProbeModel;
 import org.redpill.linpro.alfresco.clusterprobe.Settings;
 import org.springframework.beans.factory.InitializingBean;
@@ -23,7 +25,7 @@ import java.util.List;
 
 public class ClusterProbeUtils implements InitializingBean {
 
-
+    private static final Logger LOG = Logger.getLogger(ClusterProbeUtils.class);
     private SearchService _searchService;
 
 
@@ -39,6 +41,8 @@ public class ClusterProbeUtils implements InitializingBean {
     private FileFolderService _fileFolderService;
 
     protected String confProbeDiscPath;
+
+
 
     public Settings getSettings(final String server) {
         Assert.hasText(server, "You must supply a server parameter");
@@ -179,7 +183,7 @@ public class ClusterProbeUtils implements InitializingBean {
         try(FileWriter fileWriter = new FileWriter(confProbeDiscPath)) {
             jsonObject.writeJSONString(fileWriter);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.error("Failed to saves settings", e);
             return false;
         }
         return true;
