@@ -17,9 +17,9 @@ import org.springframework.util.Assert;
 
 import javax.servlet.http.HttpSession;
 
-public class ProbeGet extends AbstractProbe implements InitializingBean {
+public class SettingsGet extends AbstractProbe implements InitializingBean {
 
-  private static final Logger LOG = Logger.getLogger(ProbeGet.class);
+  private static final Logger LOG = Logger.getLogger(SettingsGet.class);
   protected static final String ENDPOINT_ID = "alfresco";
 
 
@@ -28,7 +28,6 @@ public class ProbeGet extends AbstractProbe implements InitializingBean {
   @Override
   protected Settings getProbeSettings(final WebScriptRequest req) {
     try {
-      final String server = getServer();
 
       final RequestContext requestContext = ThreadLocalRequestContext.getRequestContext();
 
@@ -40,7 +39,7 @@ public class ProbeGet extends AbstractProbe implements InitializingBean {
 
       final Connector connector = connService.getConnector(ENDPOINT_ID, currentUserId, currentSession);
 
-      final String alfrescoURL = "/org/redpill/alfresco/clusterprobe/settings?server=" + server;
+      final String alfrescoURL = "/org/redpill/alfresco/clusterprobe/settings";
 
       final Response response = connector.call(alfrescoURL);
 

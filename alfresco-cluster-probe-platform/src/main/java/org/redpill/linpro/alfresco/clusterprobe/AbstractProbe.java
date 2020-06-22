@@ -91,10 +91,6 @@ public abstract class AbstractProbe extends DeclarativeWebScript implements Init
     }
 
 
-    protected Settings getProbeSettings() {
-        return getProbeSettings(null);
-    }
-
     protected String getConfiguredServer() {
         return configuredServer;
     }

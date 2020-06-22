@@ -30,7 +30,7 @@
     </bean>
 
     <bean id="webscript.org.redpill.alfresco.clusterprobe.probe.get"
-          class="org.redpill.linpro.alfresco.clusterprobe.share.ProbeGet"
+          class="org.redpill.linpro.alfresco.clusterprobe.share.SettingsGet"
           parent="webscript">
         <property name="probeConfiguration" ref="cp.clusterProbeShareConfiguration"/>
     </bean>
