@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.util.Assert;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -13,14 +14,12 @@ public class ClusterProbeUtils implements InitializingBean {
 
     private static final Logger LOG = Logger.getLogger(ClusterProbeUtils.class);
 
-    protected String confProbeDiscPath;
-
-
+    protected String confProbeDiskPath;
 
 
     public JSONArray getSettingsJSON() {
         JSONParser jsonParser = new JSONParser();
-        try (FileReader fileReader = new FileReader(confProbeDiscPath)) {
+        try (FileReader fileReader = new FileReader(confProbeDiskPath)) {
 
             Object parse = jsonParser.parse(fileReader);
 
@@ -32,9 +31,9 @@ public class ClusterProbeUtils implements InitializingBean {
         }
     }
 
-    public boolean saveSettingsJSON(JSONArray jsonObject){
+    public boolean saveSettingsJSON(JSONArray jsonObject) {
 
-        try(FileWriter fileWriter = new FileWriter(confProbeDiscPath)) {
+        try (FileWriter fileWriter = new FileWriter(confProbeDiskPath)) {
             jsonObject.writeJSONString(fileWriter);
         } catch (IOException e) {
             LOG.error("Failed to save settings", e);
@@ -45,11 +44,13 @@ public class ClusterProbeUtils implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
+        Assert.notNull(confProbeDiskPath, "confProbeDiskPath is null");
+        if (confProbeDiskPath.startsWith("$")) {
+            throw new IllegalArgumentException("confProbeDiskPath is not set. Did you set the cluster.probe.diskpath property in alfresco-global.properties?");
+        }
     }
 
-
-
-    public void setConfProbeDiscPath(String confProbeDiscPath) {
-        this.confProbeDiscPath = confProbeDiscPath;
+    public void setConfProbeDiskPath(String confProbeDiskPath) {
+        this.confProbeDiskPath = confProbeDiskPath;
     }
 }
