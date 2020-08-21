@@ -14,7 +14,7 @@ The project consists of two modules, one for the repository side and one for sha
 
 Building & Installation
 ------------
-The build produces jar filew which can be included in your maven project using the following declaration in your pom.xml files.
+The build produces jar file which can be included in your maven project using the following declaration in your pom.xml files.
 
 Repository dependency:
 
@@ -47,24 +47,24 @@ Maven repository:
 Usage
 -----
 
-The tool allows an administrator to set whether or not a repository or share cluster node should be considered to be online in a cluster.
+The tool allows an administrator to set weather or not a repository or share cluster node should be considered to be online in a cluster.
 
-An administrator can go to the Share admin console or the enterprise admin console on the repository side to control the status of all servers in the cluster that have the same configuration.
+An administrator can go to the share admin console or the enterprise admin console on the repository side to control the status of all servers in the cluster that have the same configuration.
 
 
 The following endpoints are available out of the box:
 
 Share:
-* http://localhost:8081/share/noauth/org/redpill/alfresco/clusterprobe/probe/repo - Will return the probe status and text for share
+* http://localhost:8081/share/noauth/org/redpill/alfresco/clusterprobe/probe/share - Will return the probe status and text for share
 * http://localhost:8081/share/noauth/org/redpill/alfresco/clusterprobe/probe/repo - Will return the probe status and text for the repository node that this share node is currently connected to
 * http://localhost:8081/share/noauth/org/redpill/alfresco/clusterprobe/probe/search - Will return the probe status of the search engine that the current repo node uses
 * http://localhost:8081/share/noauth/org/redpill/alfresco/clusterprobe/probe/transform/docx/pdf - Will return the probe status of transforms between docx and pdf on the repo node that this share node is currently connected to
 * http://localhost:8081/share/noauth/org/redpill/alfresco/clusterprobe/probe/transform/docx/png - Will return the probe status of transforms between docx and png on the repo node that this share node is currently connected to
 
 Repository:
+* http://localhost:8080/alfresco/service/org/redpill/alfresco/clusterprobe/probe/share - Will return the probe status for share on the current server
 * http://localhost:8080/alfresco/service/org/redpill/alfresco/clusterprobe/probe/repo - Will return the probe status of the targeted repository node
 * http://localhost:8080/alfresco/service/org/redpill/alfresco/clusterprobe/probe/search - Will return the probe status of the search engine that the current repo node uses
-* http://localhost:8080/alfresco/service/org/redpill/alfresco/clusterprobe/probe/share - Will return the probe status for share on the current server
 * http://localhost:8080/alfresco/service/org/redpill/alfresco/clusterprobe/probe/transform/docx/pdf - Will return the probe status of transforms between docx and pdf
 * http://localhost:8080/alfresco/service/org/redpill/alfresco/clusterprobe/probe/transform/docx/png - Will return the probe status of transforms between docx and png
 
@@ -150,7 +150,7 @@ Two things are needed to configure the clusterprobe:
     *  cluster.probe.offline.text=OFFLINE, The text that will be returned for an inactive node
     *  cluster.probe.hosts=localhost,localhost3,localhost4,localhost5, A list of configured servers. Specifies which servers are configured in the json-config file. Only server entries that are in both places will be valid
     *  cluster.probe.host=localhost, The current server, will be used of no explicit server is provided in probe call
-    *  cluster.probe.discpath=/clusterprobesettings/clusterProbeSettings.json, the path to the json configuration file on disk
+    *  cluster.probe.diskpath=/clusterprobesettings/clusterProbeSettings.json, the path to the json configuration file on disk
 
 
 The recommended way of configuring the cluster probe is to use either configuration file or a custom environment variable. The lookup of server hostname might be expensive if the probe is used continuously.
@@ -182,3 +182,5 @@ Authors
 Niklas Ekman - Redpill Linpro AB
 
 Marcus Svartmark - Redpill Linpro AB
+
+Filip Labe - Redpill Linpro AB
