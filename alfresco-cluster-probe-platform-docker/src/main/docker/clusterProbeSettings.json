@@ -1,0 +1,31 @@
+[
+  {
+    "serverName": "localhost.home.se",
+    "repo": true,
+    "share": true,
+    "search": true,
+    "description": "localhost server 1"
+  },
+  {
+    "serverName": "localhost2",
+    "repo": true,
+    "share": true,
+    "search": true,
+    "description": "localhost server 2"
+  },
+  {
+    "serverName": "localhost3",
+    "share": true,
+    "description": "localhost share server"
+  },
+  {
+    "serverName": "localhost4",
+    "search": true,
+    "description": "localhost search server"
+  },
+  {
+    "serverName": "localhost5",
+    "repo": true,
+    "description": "locahost repo server"
+  }
+]

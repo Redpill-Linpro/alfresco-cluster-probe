@@ -1,0 +1,8 @@
+<webscript>
+  <shortname>Script for getting settings</shortname>
+  <url>/com/redpill/alfresco/clusterprobe/settings</url>
+  <url>/org/redpill/alfresco/clusterprobe/settings</url>
+  <family>Redpill Linpro - Cluster Probe</family>
+  <authentication>none</authentication>
+  <format default="json">extension</format>
+</webscript>

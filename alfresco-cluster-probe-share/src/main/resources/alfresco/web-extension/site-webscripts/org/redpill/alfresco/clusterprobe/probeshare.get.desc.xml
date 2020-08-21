@@ -1,0 +1,12 @@
+<webscript>
+  <shortname>Probe Share and return an answer</shortname>
+  <description></description>
+  <url>/com/redpill/alfresco/clusterprobe/probe/share</url>
+  <url>/com/redpill/alfresco/clusterprobe/probe/share/{hostName}</url>
+  <url>/org/redpill/alfresco/clusterprobe/probe/share</url>
+  <url>/org/redpill/alfresco/clusterprobe/probe/share/{hostName}</url>
+  <family>Redpill Linpro - Cluster Probe</family>
+  <format default="text">argument</format>
+  <authentication>none</authentication>
+  <transaction>none</transaction>
+</webscript>
