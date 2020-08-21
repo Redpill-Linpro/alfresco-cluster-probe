@@ -1,1 +1,0 @@
-{ "text": "${text}", "code": ${code} }
