@@ -27,7 +27,7 @@ public class ClusterProbeUtils implements InitializingBean {
             return (JSONArray) parse;
 
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Failed to get settings", e);
             return null;
         }
     }
@@ -37,7 +37,7 @@ public class ClusterProbeUtils implements InitializingBean {
         try(FileWriter fileWriter = new FileWriter(confProbeDiscPath)) {
             jsonObject.writeJSONString(fileWriter);
         } catch (IOException e) {
-            LOG.error("Failed to saves settings", e);
+            LOG.error("Failed to save settings", e);
             return false;
         }
         return true;
