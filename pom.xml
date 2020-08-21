@@ -3,9 +3,9 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.redpill-linpro.alfresco</groupId>
     <artifactId>alfresco-cluster-probe</artifactId>
-    <version>2.0.0-SNAPSHOT</version>
-    <name>AIO - SDK 4.0</name>
-    <description>All-In-One (AIO) project for SDK 4.0</description>
+    <version>2.0.0</version>
+    <name>Alfresco Cluster Probe</name>
+    <description>Cluster probe to use with clustered enterprise deployments of Alfresco</description>
     <packaging>pom</packaging>
 
     <prerequisites>
