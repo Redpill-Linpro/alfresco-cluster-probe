@@ -200,5 +200,7 @@ public abstract class AbstractProbe extends DeclarativeWebScript implements Init
         this.configuredHosts = Arrays.asList(configuredHosts.split(","));
     }
 
-
+    public void setThresholdLoadWarning(long thresholdLoadWarning) {
+        this.thresholdLoadWarning = thresholdLoadWarning;
+    }
 }
