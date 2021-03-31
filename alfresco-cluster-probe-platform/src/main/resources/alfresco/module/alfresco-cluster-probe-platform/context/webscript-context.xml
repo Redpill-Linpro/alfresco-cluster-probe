@@ -31,6 +31,7 @@
 		<property name="offlineHttpCode" value="${cluster.probe.offline.httpcode}"/>
 		<property name="onlineText" value="${cluster.probe.online.text}"/>
 		<property name="offlineText" value="${cluster.probe.offline.text}"/>
+		<property name="thresholdLoadWarning" value="${cluster.probe.load.threshold}"/>
 	</bean>
 
 	<bean id="webscript.org.redpill.alfresco.clusterprobe.settings.post"

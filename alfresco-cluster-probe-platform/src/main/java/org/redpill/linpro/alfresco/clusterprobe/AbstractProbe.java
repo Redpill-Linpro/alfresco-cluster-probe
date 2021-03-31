@@ -37,6 +37,7 @@ public abstract class AbstractProbe extends DeclarativeWebScript implements Init
 
     protected List<String> configuredHosts;
 
+    protected long thresholdLoadWarning;
 
     private String probeType;
 
@@ -46,6 +47,7 @@ public abstract class AbstractProbe extends DeclarativeWebScript implements Init
     protected Map<String, Object> executeImpl(WebScriptRequest req, Status status, Cache cache) {
         try {
 
+            long before = System.currentTimeMillis();
             final Settings settings = getProbeSettings(req);
 
             final int code = settings.code;
@@ -53,6 +55,12 @@ public abstract class AbstractProbe extends DeclarativeWebScript implements Init
             Map<String, Object> model = new HashMap<>();
             model.put("result", text);
             status.setCode(code);
+
+            long after = System.currentTimeMillis();
+            long time = after - before;
+            if(time > thresholdLoadWarning) {
+                LOG.warn("Returned status " + settings.text + " in " + time + " ms");
+            }
             return model;
 
         } catch (final Exception ex) {
@@ -191,4 +199,6 @@ public abstract class AbstractProbe extends DeclarativeWebScript implements Init
     public void setConfiguredHosts(String configuredHosts) {
         this.configuredHosts = Arrays.asList(configuredHosts.split(","));
     }
+
+
 }
