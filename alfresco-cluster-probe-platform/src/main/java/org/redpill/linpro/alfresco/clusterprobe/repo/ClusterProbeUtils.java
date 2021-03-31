@@ -15,9 +15,23 @@ public class ClusterProbeUtils implements InitializingBean {
     private static final Logger LOG = Logger.getLogger(ClusterProbeUtils.class);
 
     protected String confProbeDiskPath;
+    protected long thresholdLoadWarning;
 
 
     public JSONArray getSettingsJSON() {
+
+        long before = System.currentTimeMillis();
+        JSONArray settingsJSONImpl = getSettingsJSONImpl();
+        long after = System.currentTimeMillis();
+
+        long time = after - before;
+        if(time > thresholdLoadWarning) {
+            LOG.warn("Loaded settings json file in " + time + " ms");
+        }
+        return settingsJSONImpl;
+    }
+
+    private JSONArray getSettingsJSONImpl(){
         JSONParser jsonParser = new JSONParser();
         try (FileReader fileReader = new FileReader(confProbeDiskPath)) {
 
@@ -52,5 +66,9 @@ public class ClusterProbeUtils implements InitializingBean {
 
     public void setConfProbeDiskPath(String confProbeDiskPath) {
         this.confProbeDiskPath = confProbeDiskPath;
+    }
+
+    public void setThresholdLoadWarning(long thresholdLoadWarning) {
+        this.thresholdLoadWarning = thresholdLoadWarning;
     }
 }

@@ -22,6 +22,7 @@
 
     <bean id="cp.ClusterProbeUtils" class="org.redpill.linpro.alfresco.clusterprobe.repo.ClusterProbeUtils">
         <property name="confProbeDiskPath" value="${cluster.probe.diskpath}"/>
+        <property name="thresholdLoadWarning" value="${cluster.probe.load.threshold}"/>
     </bean>
     <bean id="cp.clusterProbeRepoConfiguration" class="org.redpill.linpro.alfresco.clusterprobe.repo.RepoProbeConfigurationImpl">
         <property name="globalProperties" ref="global-properties"/>
